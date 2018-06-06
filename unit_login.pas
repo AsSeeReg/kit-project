@@ -6,14 +6,14 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, Buttons, unit_m, unit_types_and_const;
+  ExtCtrls, Buttons, ActnList, unit_m, unit_types_and_const, unit_m_data;
 
 type
 
   { TFormLogin }
 
   TFormLogin = class(TForm)
-    BitBtn1: TBitBtn;
+    BitBtnOk: TBitBtn;
     BitBtn2: TBitBtn;
     EdLogin: TEdit;
     EdPas: TEdit;
@@ -26,8 +26,9 @@ type
     Panel5: TPanel;
     Panel6: TPanel;
     Panel7: TPanel;
-    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtnOkClick(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: char);
   private
     { private declarations }
   public
@@ -43,9 +44,10 @@ implementation
 
 { TFormLogin }
 
-procedure TFormLogin.BitBtn1Click(Sender: TObject);
+procedure TFormLogin.BitBtnOkClick(Sender: TObject);
 var CheckLicRes:string;
 begin
+  FormM.ActionReconnectExecute(nil);
   CheckLicRes:=CheckLic(EdLogin.text,GetHash(EdPas.text));
   if CheckLicRes<>'' then
   begin
@@ -53,11 +55,18 @@ begin
    Caption:=CheckLicRes;
    exit;
   end;
-  FormM.ActionReconnectExecute(nil);
 end;
 
 procedure TFormLogin.BitBtn2Click(Sender: TObject);
 begin
+end;
+
+procedure TFormLogin.FormKeyPress(Sender: TObject; var Key: char);
+begin
+  if Key = #13 then
+  begin
+     BitBtnOk.Click;
+  end;
 end;
 
 end.

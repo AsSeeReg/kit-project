@@ -4705,9 +4705,9 @@ object DataM: TDataM
     Connected = True
     DesignConnection = True
     Port = 0
-    Database = 'C:\GIT\_AIS\db\tramways.db'
+    Database = 'C:\GIT\kit-project\db\tramways.db'
     Protocol = 'sqlite-3'
-    LibraryLocation = 'C:\GIT\_AIS\dll\sqlite3.dll'
+    LibraryLocation = 'C:\GIT\kit-project\sqlite3.dll'
     left = 24
     top = 82
   end

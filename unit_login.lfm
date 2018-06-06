@@ -9,6 +9,8 @@ object FormLogin: TFormLogin
   ClientHeight = 116
   ClientWidth = 329
   FormStyle = fsSystemStayOnTop
+  KeyPreview = True
+  OnKeyPress = FormKeyPress
   Position = poScreenCenter
   ShowInTaskBar = stNever
   LCLVersion = '1.6.4.0'
@@ -70,7 +72,7 @@ object FormLogin: TFormLogin
         Width = 248
         Align = alClient
         TabOrder = 0
-        Text = 'Login'
+        Text = 'first admin'
       end
     end
     object Panel5: TPanel
@@ -120,18 +122,20 @@ object FormLogin: TFormLogin
         Top = 0
         Width = 248
         Align = alClient
+        EchoMode = emPassword
+        PasswordChar = '*'
         TabOrder = 0
-        Text = '*************'
+        Text = 'user'
       end
     end
-    object BitBtn1: TBitBtn
+    object BitBtnOk: TBitBtn
       Left = 216
       Height = 30
       Top = 80
       Width = 96
       Caption = 'Ок'
       ModalResult = 1
-      OnClick = BitBtn1Click
+      OnClick = BitBtnOkClick
       TabOrder = 4
     end
     object BitBtn2: TBitBtn

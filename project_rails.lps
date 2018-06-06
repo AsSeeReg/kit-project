@@ -18,8 +18,8 @@
         <ComponentName Value="FormM"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="352"/>
-        <CursorPos X="45" Y="371"/>
+        <TopLine Value="175"/>
+        <CursorPos X="47" Y="198"/>
         <UsageCount Value="212"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -41,7 +41,7 @@
         <ResourceBaseClass Value="DataModule"/>
         <EditorIndex Value="16"/>
         <TopLine Value="24"/>
-        <CursorPos X="14" Y="53"/>
+        <CursorPos X="8" Y="34"/>
         <UsageCount Value="206"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -59,8 +59,8 @@
         <Filename Value="unit_types_and_const.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="87"/>
-        <CursorPos X="38" Y="106"/>
+        <TopLine Value="106"/>
+        <CursorPos X="30" Y="117"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit5>
@@ -72,8 +72,8 @@
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="FramePassportProperties"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="25"/>
-        <CursorPos X="64" Y="152"/>
+        <TopLine Value="133"/>
+        <CursorPos Y="139"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -112,8 +112,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="7"/>
-        <TopLine Value="26"/>
-        <CursorPos X="33" Y="43"/>
+        <TopLine Value="40"/>
+        <CursorPos Y="54"/>
         <UsageCount Value="205"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -164,8 +164,8 @@
         <ResourceBaseClass Value="Frame"/>
         <UnitName Value="FrameSettingsElements"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="99"/>
-        <CursorPos X="66" Y="98"/>
+        <TopLine Value="68"/>
+        <CursorPos Y="90"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -179,7 +179,7 @@
         <UnitName Value="frameCad"/>
         <EditorIndex Value="8"/>
         <CursorPos X="20" Y="126"/>
-        <UsageCount Value="176"/>
+        <UsageCount Value="181"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit15>
@@ -193,7 +193,7 @@
         <EditorIndex Value="10"/>
         <TopLine Value="391"/>
         <CursorPos X="10" Y="416"/>
-        <UsageCount Value="166"/>
+        <UsageCount Value="171"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit16>
@@ -206,7 +206,7 @@
         <UnitName Value="unitDemoFrame1"/>
         <EditorIndex Value="4"/>
         <CursorPos X="76" Y="18"/>
-        <UsageCount Value="158"/>
+        <UsageCount Value="163"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit17>
@@ -217,7 +217,7 @@
         <EditorIndex Value="9"/>
         <TopLine Value="12"/>
         <CursorPos X="19" Y="64"/>
-        <UsageCount Value="121"/>
+        <UsageCount Value="126"/>
         <Loaded Value="True"/>
       </Unit18>
       <Unit19>
@@ -228,9 +228,9 @@
         <ResourceBaseClass Value="Frame"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="48"/>
-        <CursorPos X="3" Y="72"/>
-        <UsageCount Value="74"/>
+        <TopLine Value="90"/>
+        <CursorPos X="67" Y="116"/>
+        <UsageCount Value="79"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit19>
@@ -242,7 +242,7 @@
         <ResourceBaseClass Value="Frame"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="11" Y="5"/>
-        <UsageCount Value="69"/>
+        <UsageCount Value="74"/>
       </Unit20>
       <Unit21>
         <Filename Value="C:\lazarus\1.6.4\lcl\include\control.inc"/>
@@ -263,9 +263,9 @@
         <Filename Value="C:\lazarus\1.6.4\lcl\controls.pp"/>
         <UnitName Value="Controls"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="2231"/>
-        <CursorPos X="3" Y="2248"/>
-        <UsageCount Value="10"/>
+        <TopLine Value="1581"/>
+        <CursorPos X="14" Y="1596"/>
+        <UsageCount Value="11"/>
       </Unit23>
       <Unit24>
         <Filename Value="C:\lazarus\1.6.4\_my_components\ZEOSDBO-7.1.4-stable\src\component\ZAbstractRODataset.pas"/>
@@ -323,8 +323,8 @@
         <Filename Value="C:\lazarus\1.6.4\lcl\grids.pas"/>
         <UnitName Value="Grids"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="1637"/>
-        <CursorPos X="3" Y="1654"/>
+        <TopLine Value="9270"/>
+        <CursorPos Y="9287"/>
         <UsageCount Value="12"/>
       </Unit31>
       <Unit32>
@@ -392,9 +392,9 @@
         <Filename Value="C:\lazarus\1.6.4\lcl\graphics.pp"/>
         <UnitName Value="Graphics"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="704"/>
-        <CursorPos X="55" Y="731"/>
-        <UsageCount Value="5"/>
+        <TopLine Value="246"/>
+        <CursorPos X="8" Y="274"/>
+        <UsageCount Value="11"/>
       </Unit40>
       <Unit41>
         <Filename Value="C:\lazarus\1.8\fpc\3.0.4\source\rtl\objpas\classes\classesh.inc"/>
@@ -478,9 +478,9 @@
         <Filename Value="C:\lazarus\1.6.4\lcl\stdctrls.pp"/>
         <UnitName Value="StdCtrls"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="692"/>
-        <CursorPos X="14" Y="694"/>
-        <UsageCount Value="8"/>
+        <TopLine Value="874"/>
+        <CursorPos X="14" Y="891"/>
+        <UsageCount Value="11"/>
       </Unit52>
       <Unit53>
         <Filename Value="C:\lazarus\1.8\fpc\3.0.4\source\packages\fcl-base\src\custapp.pp"/>
@@ -507,7 +507,7 @@
         <UsageCount Value="7"/>
       </Unit55>
       <Unit56>
-        <Filename Value="..\..\ProxyDll\fUnit.pas"/>
+        <Filename Value="C:\ProxyDll\fUnit.pas"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
@@ -556,124 +556,124 @@
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="unit_m.pas"/>
-        <Caret Line="381" Column="87" TopLine="374"/>
+        <Filename Value="frame_set_users\unit_frame_set_users.pas"/>
+        <Caret Line="107" Column="27" TopLine="90"/>
       </Position1>
       <Position2>
-        <Filename Value="unit_m.pas"/>
-        <Caret Line="380" Column="87" TopLine="373"/>
+        <Filename Value="frame_set_users\unit_frame_set_users.pas"/>
+        <Caret Line="109" Column="33" TopLine="91"/>
       </Position2>
       <Position3>
-        <Filename Value="unit_m.pas"/>
-        <Caret Line="381" Column="87" TopLine="374"/>
+        <Filename Value="frame_set_users\unit_frame_set_users.pas"/>
+        <Caret Line="114" Column="33" TopLine="93"/>
       </Position3>
       <Position4>
-        <Filename Value="unit_m.pas"/>
-        <Caret Line="382" Column="87" TopLine="375"/>
+        <Filename Value="frame_set_users\unit_frame_set_users.pas"/>
+        <Caret Line="117" Column="20" TopLine="112"/>
       </Position4>
       <Position5>
-        <Filename Value="unit_m.pas"/>
-        <Caret Line="381" Column="87" TopLine="374"/>
+        <Filename Value="frame_set_users\unit_frame_set_users.pas"/>
+        <Caret Line="113" Column="55" TopLine="98"/>
       </Position5>
       <Position6>
         <Filename Value="unit_m.pas"/>
-        <Caret Line="380" Column="87" TopLine="373"/>
+        <Caret Line="364" Column="63" TopLine="347"/>
       </Position6>
       <Position7>
         <Filename Value="unit_m.pas"/>
-        <Caret Line="381" Column="87" TopLine="374"/>
+        <Caret Line="414" Column="2" TopLine="412"/>
       </Position7>
       <Position8>
         <Filename Value="unit_m.pas"/>
-        <Caret Line="380" Column="87" TopLine="373"/>
+        <Caret Line="158" Column="66" TopLine="141"/>
       </Position8>
       <Position9>
         <Filename Value="unit_m.pas"/>
-        <Caret Line="381" Column="87" TopLine="374"/>
+        <Caret Line="161" Column="26" TopLine="141"/>
       </Position9>
       <Position10>
         <Filename Value="unit_m.pas"/>
-        <Caret Line="380" Column="87" TopLine="373"/>
+        <Caret Line="197" TopLine="172"/>
       </Position10>
       <Position11>
-        <Filename Value="unit_m.pas"/>
-        <Caret Line="381" Column="87" TopLine="374"/>
+        <Filename Value="frame_set_users\unit_frame_set_users.pas"/>
+        <Caret Line="112" Column="42" TopLine="92"/>
       </Position11>
       <Position12>
-        <Filename Value="unit_m.pas"/>
-        <Caret Line="380" Column="87" TopLine="373"/>
+        <Filename Value="frame_set_users\unit_frame_set_users.pas"/>
+        <Caret Line="119" Column="42" TopLine="94"/>
       </Position12>
       <Position13>
-        <Filename Value="unit_m.pas"/>
-        <Caret Line="379" Column="87" TopLine="372"/>
+        <Filename Value="frame_set_users\unit_frame_set_users.pas"/>
+        <Caret Line="107" Column="5" TopLine="92"/>
       </Position13>
       <Position14>
-        <Filename Value="unit_m.pas"/>
-        <Caret Line="378" Column="87" TopLine="371"/>
+        <Filename Value="frame_set_users\unit_frame_set_users.pas"/>
+        <Caret Line="125" Column="3" TopLine="107"/>
       </Position14>
       <Position15>
-        <Filename Value="unit_m.pas"/>
-        <Caret Line="377" Column="87" TopLine="370"/>
+        <Filename Value="frame_set_users\unit_frame_set_users.pas"/>
+        <Caret Line="133" Column="69" TopLine="114"/>
       </Position15>
       <Position16>
-        <Filename Value="unit_m.pas"/>
-        <Caret Line="376" Column="87" TopLine="369"/>
+        <Filename Value="unit_login.pas"/>
+        <Caret Line="58" Column="46" TopLine="31"/>
       </Position16>
       <Position17>
-        <Filename Value="unit_m.pas"/>
-        <Caret Line="375" Column="87" TopLine="368"/>
+        <Filename Value="unit_login.pas"/>
+        <Caret Line="59" Column="46" TopLine="32"/>
       </Position17>
       <Position18>
-        <Filename Value="unit_m.pas"/>
-        <Caret Line="374" Column="87" TopLine="367"/>
+        <Filename Value="unit_login.pas"/>
+        <Caret Line="60" Column="46" TopLine="33"/>
       </Position18>
       <Position19>
-        <Filename Value="unit_m.pas"/>
-        <Caret Line="375" Column="87" TopLine="368"/>
+        <Filename Value="unit_login.pas"/>
+        <Caret Line="59" Column="46" TopLine="32"/>
       </Position19>
       <Position20>
-        <Filename Value="unit_m.pas"/>
-        <Caret Line="374" Column="87" TopLine="367"/>
+        <Filename Value="unit_login.pas"/>
+        <Caret Line="58" Column="46" TopLine="31"/>
       </Position20>
       <Position21>
-        <Filename Value="unit_m.pas"/>
-        <Caret Line="375" Column="87" TopLine="368"/>
+        <Filename Value="unit_login.pas"/>
+        <Caret Line="59" Column="46" TopLine="31"/>
       </Position21>
       <Position22>
-        <Filename Value="unit_m.pas"/>
-        <Caret Line="374" Column="87" TopLine="367"/>
+        <Filename Value="unit_login.pas"/>
+        <Caret Line="66" TopLine="40"/>
       </Position22>
       <Position23>
-        <Filename Value="framepassport.pas"/>
-        <Caret Line="84" Column="60" TopLine="67"/>
+        <Filename Value="unit_login.pas"/>
+        <Caret Line="68" TopLine="40"/>
       </Position23>
       <Position24>
-        <Filename Value="framepassport.pas"/>
-        <Caret Line="85" Column="60" TopLine="68"/>
+        <Filename Value="unit_login.pas"/>
+        <Caret Line="49" TopLine="40"/>
       </Position24>
       <Position25>
-        <Filename Value="frame_set_users\unit_frame_set_users.pas"/>
-        <Caret Line="42" Column="45" TopLine="30"/>
+        <Filename Value="unit_login.pas"/>
+        <Caret Line="50" TopLine="40"/>
       </Position25>
       <Position26>
-        <Filename Value="frame_set_users\unit_frame_set_users.pas"/>
-        <Caret Line="47" Column="45" TopLine="31"/>
+        <Filename Value="unit_login.pas"/>
+        <Caret Line="51" TopLine="40"/>
       </Position26>
       <Position27>
-        <Filename Value="frame_set_users\unit_frame_set_users.pas"/>
-        <Caret Line="46" Column="27" TopLine="13"/>
+        <Filename Value="unit_login.pas"/>
+        <Caret Line="52" TopLine="40"/>
       </Position27>
       <Position28>
-        <Filename Value="frame_set_users\unit_frame_set_users.pas"/>
-        <Caret Line="73" Column="3" TopLine="49"/>
+        <Filename Value="unit_login.pas"/>
+        <Caret Line="49" TopLine="40"/>
       </Position28>
       <Position29>
-        <Filename Value="frame_set_users\unit_frame_set_users.pas"/>
-        <Caret Line="72" Column="3" TopLine="48"/>
+        <Filename Value="unit_login.pas"/>
+        <Caret Line="66" TopLine="40"/>
       </Position29>
       <Position30>
-        <Filename Value="frame_set_users\unit_frame_set_users.pas"/>
-        <Caret Line="71" Column="3" TopLine="47"/>
+        <Filename Value="unit_login.pas"/>
+        <Caret Line="68" Column="20" TopLine="40"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>

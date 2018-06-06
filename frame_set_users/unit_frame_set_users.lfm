@@ -1,29 +1,31 @@
 object FrameSetUsers: TFrameSetUsers
   Left = 0
-  Height = 483
+  Height = 510
   Hint = 'Настройка пользователей'
   Top = 0
   Width = 630
-  ClientHeight = 483
+  ClientHeight = 510
   ClientWidth = 630
   TabOrder = 0
-  DesignLeft = 731
-  DesignTop = 284
-  object RxDBGrid1: TRxDBGrid
+  DesignLeft = 702
+  DesignTop = 218
+  object RxDBGridUsers: TRxDBGrid
     Left = 0
-    Height = 112
-    Top = 0
+    Height = 105
+    Top = 34
     Width = 630
-    AfterQuickSearch = RxDBGrid1AfterQuickSearch
     ColumnDefValues.BlobText = '(данные)'
     TitleButtons = True
     AutoSort = True
     Columns = <    
       item
+        MinSize = 0
         Title.Alignment = taCenter
         Title.Orientation = toHorizontal
         Title.Caption = 'Id'
         Width = 0
+        Visible = False
+        FieldName = 'id'
         EditButtons = <>
         Filter.DropDownRows = 0
         Filter.EmptyValue = '(Пусто)'
@@ -37,8 +39,8 @@ object FrameSetUsers: TFrameSetUsers
         Title.Alignment = taCenter
         Title.Orientation = toHorizontal
         Title.Caption = 'Логин'
-        Width = 97
-        FieldName = 'name'
+        Width = 50
+        FieldName = 'login'
         EditButtons = <>
         Filter.DropDownRows = 0
         Filter.EmptyValue = '(Пусто)'
@@ -52,8 +54,8 @@ object FrameSetUsers: TFrameSetUsers
         Title.Alignment = taCenter
         Title.Orientation = toHorizontal
         Title.Caption = 'Ф.И.О.'
-        Width = 547
-        FieldName = 'comment'
+        Width = 576
+        FieldName = 'short_name'
         EditButtons = <>
         Filter.DropDownRows = 0
         Filter.EmptyValue = '(Пусто)'
@@ -124,6 +126,7 @@ object FrameSetUsers: TFrameSetUsers
     OptionsRx = [rdgAllowColumnsForm, rdgAllowDialogFind, rdgAllowQuickSearch, rdgAllowQuickFilter, rdgAllowFilterForm, rdgAllowSortForm, rdgAllowToolMenu]
     Align = alClient
     AutoFillColumns = True
+    AutoEdit = False
     Color = clWindow
     DrawFullLine = False
     FocusColor = clSkyBlue
@@ -132,7 +135,7 @@ object FrameSetUsers: TFrameSetUsers
     GridLineStyle = psSolid
     DataSource = DSUsers
     FixedCols = 0
-    Options = [dgTitles, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgAlwaysShowSelection, dgCancelOnExit, dgHeaderPushedLook]
+    Options = [dgTitles, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgAlwaysShowSelection, dgCancelOnExit, dgHeaderPushedLook, dgAutoSizeColumns, dgRowHighlight]
     Scrollbars = ssAutoVertical
     TabOrder = 0
     TitleFont.CharSet = RUSSIAN_CHARSET
@@ -141,11 +144,13 @@ object FrameSetUsers: TFrameSetUsers
     TitleFont.Pitch = fpVariable
     TitleFont.Quality = fqDraft
     TitleStyle = tsNative
+    OnCellClick = RxDBGridUsersCellClick
+    OnColEnter = RxDBGridUsersColEnter
   end
-  object Panel1: TPanel
+  object PanelEdit: TPanel
     Left = 0
     Height = 371
-    Top = 112
+    Top = 139
     Width = 630
     Align = alBottom
     AutoSize = True
@@ -163,7 +168,7 @@ object FrameSetUsers: TFrameSetUsers
       ClientWidth = 628
       Enabled = False
       TabOrder = 0
-      object CheckBox2: TCheckBox
+      object CheckBoxComp4: TCheckBox
         Left = 1
         Height = 39
         Top = 1
@@ -199,7 +204,7 @@ object FrameSetUsers: TFrameSetUsers
       ClientHeight = 41
       ClientWidth = 628
       TabOrder = 1
-      object CheckBox3: TCheckBox
+      object CheckBoxComp3: TCheckBox
         Left = 1
         Height = 39
         Top = 1
@@ -233,7 +238,7 @@ object FrameSetUsers: TFrameSetUsers
       ClientHeight = 41
       ClientWidth = 628
       TabOrder = 2
-      object CheckBox4: TCheckBox
+      object CheckBoxComp2: TCheckBox
         Left = 1
         Height = 39
         Top = 1
@@ -267,7 +272,7 @@ object FrameSetUsers: TFrameSetUsers
       ClientHeight = 41
       ClientWidth = 628
       TabOrder = 3
-      object CheckBox5: TCheckBox
+      object CheckBoxComp1: TCheckBox
         Left = 1
         Height = 39
         Top = 1
@@ -284,22 +289,23 @@ object FrameSetUsers: TFrameSetUsers
         Align = alClient
         Lines.Strings = (
           ' - обладает правами на работу с системными настройками, архивами, '
-          'окончательным удалением данных'
+          'окончательным удалением данных, редактирование пользователей'
         )
         ParentColor = True
         TabOrder = 1
       end
     end
-    object Button1: TButton
+    object ButtonPost: TButton
       Left = 1
       Height = 25
       Top = 345
       Width = 628
       Align = alBottom
       Caption = 'Подтвердить изменения'
+      OnClick = ButtonPostClick
       TabOrder = 4
     end
-    object StringGrid1: TStringGrid
+    object StringGridUserSett: TStringGrid
       Left = 1
       Height = 111
       Top = 1
@@ -355,8 +361,7 @@ object FrameSetUsers: TFrameSetUsers
       ClientHeight = 53
       ClientWidth = 628
       TabOrder = 7
-      OnClick = Panel7Click
-      object CheckBox6: TCheckBox
+      object CheckBoxPassword: TCheckBox
         Left = 1
         Height = 51
         Top = 1
@@ -364,6 +369,7 @@ object FrameSetUsers: TFrameSetUsers
         Align = alLeft
         AutoSize = False
         Caption = 'Изменить пороль'
+        OnChange = CheckBoxPasswordChange
         TabOrder = 0
       end
       object Panel8: TPanel
@@ -376,37 +382,66 @@ object FrameSetUsers: TFrameSetUsers
         ClientHeight = 51
         ClientWidth = 468
         TabOrder = 1
-        object Edit2: TEdit
+        object EditPas1: TEdit
           Left = 1
           Height = 23
           Top = 1
           Width = 466
           Align = alTop
+          EchoMode = emPassword
+          OnChange = PasswordChange
+          PasswordChar = '*'
           TabOrder = 0
-          Text = '*************'
+          Text = 'password'
         end
-        object Edit3: TEdit
+        object EditPas2: TEdit
           Left = 1
           Height = 23
           Top = 24
           Width = 466
           Align = alTop
+          EchoMode = emPassword
+          OnChange = PasswordChange
+          PasswordChar = '*'
           TabOrder = 1
-          Text = '*************'
+          Text = 'password'
         end
       end
+    end
+  end
+  object ToolBar1: TToolBar
+    Left = 0
+    Height = 34
+    Top = 0
+    Width = 630
+    AutoSize = True
+    ButtonHeight = 32
+    ButtonWidth = 32
+    Caption = 'ToolBar1'
+    Images = DataM.IL_32
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 2
+    object ToolButton1: TToolButton
+      Left = 1
+      Top = 2
+      Action = ActionAddUser
+    end
+    object ToolButton2: TToolButton
+      Left = 37
+      Top = 2
+      Action = ActionDelUser
     end
   end
   object ZTUsers: TZTable
     Connection = DataM.ZConnection1
     Filtered = True
-    Active = True
     TableName = 'users'
     ShowRecordTypes = [usUnmodified, usModified]
     MasterFields = 'id'
     Options = []
-    left = 40
-    top = 40
+    left = 80
+    top = 64
     object ZTUsersid: TLargeintField
       FieldKind = fkData
       FieldName = 'id'
@@ -416,7 +451,7 @@ object FrameSetUsers: TFrameSetUsers
       ReadOnly = False
       Required = False
     end
-    object ZTUserslogin: TMemoField
+    object ZTUserslogin: TStringField
       FieldKind = fkData
       FieldName = 'login'
       Index = 1
@@ -424,13 +459,127 @@ object FrameSetUsers: TFrameSetUsers
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = True
-      BlobType = ftMemo
-      Transliterate = False
+      Size = 1020
+    end
+    object ZTUserspasHash: TStringField
+      FieldKind = fkData
+      FieldName = 'pasHash'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 80
+    end
+    object ZTUsersfirst_name: TStringField
+      FieldKind = fkData
+      FieldName = 'first_name'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 80
+    end
+    object ZTUsersfirst_name_2: TStringField
+      FieldKind = fkData
+      FieldName = 'first_name_2'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 80
+    end
+    object ZTUserslast_name: TStringField
+      FieldKind = fkData
+      FieldName = 'last_name'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 80
+    end
+    object ZTUsersshort_name: TStringField
+      FieldKind = fkData
+      FieldName = 'short_name'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 80
+    end
+    object ZTUserscompetency1: TBooleanField
+      FieldKind = fkData
+      FieldName = 'competency1'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object ZTUserscompetency2: TBooleanField
+      FieldKind = fkData
+      FieldName = 'competency2'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object ZTUserscompetency3: TBooleanField
+      FieldKind = fkData
+      FieldName = 'competency3'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object ZTUserscompetency4: TBooleanField
+      FieldKind = fkData
+      FieldName = 'competency4'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
     end
   end
   object DSUsers: TDataSource
     DataSet = ZTUsers
     left = 144
-    top = 40
+    top = 64
+  end
+  object ActionList1: TActionList
+    Images = DataM.IL_32
+    left = 16
+    top = 64
+    object ActionAddUser: TAction
+      Caption = 'Добавить пользователя'
+      Hint = 'Добавить пользователя'
+      ImageIndex = 2
+      OnExecute = ActionAddUserExecute
+    end
+    object ActionDelUser: TAction
+      Caption = 'Удалить пользователя'
+      Hint = 'Удалить пользователя'
+      ImageIndex = 3
+      OnExecute = ActionDelUserExecute
+    end
+    object ActionSelectUser: TAction
+      Caption = 'ActionSelectUser'
+      OnExecute = ActionSelectUserExecute
+    end
+    object ActionPostEdit: TAction
+      Caption = 'ActionPostEdit'
+      OnExecute = ActionPostEditExecute
+    end
   end
 end

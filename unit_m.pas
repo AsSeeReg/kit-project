@@ -191,6 +191,9 @@ begin
  SetLength(PassportsArr,0);
  if FormLogin.ShowModal<>mrOK then Close;
  ActionShowEditDemo.Execute;
+ Caption:=Caption+' lic. "'+authorization.LicName+'"';
+ if authorization.Demo then Caption:=Caption+' - Demo';
+ Caption:=Caption+' - '+authorization.UserName;
  WindowState:=wsFullScreen;
  AppIsInit:=True;//конец инициализации приложения
 end;

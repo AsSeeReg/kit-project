@@ -5,7 +5,7 @@ interface
 //типы, слассы, константы, методы общего назначения
 uses
   Classes, SysUtils, md5, ZDataset, ZConnection, Forms, Controls, Grids,
-  StdCtrls, DBGrids, DbCtrls, ComCtrls, ActnList, KGrids;
+  StdCtrls, DBGrids, DbCtrls, ComCtrls, ActnList, unit_m_data, KGrids;
 
 const
  const_pasNew = -1;
@@ -32,6 +32,7 @@ type
     LicCount:Integer;
     LicName:String;
     UserID:Integer;
+    UserName:String;
     competency1:Boolean;
     competency2:Boolean;
     competency3:Boolean;
@@ -92,19 +93,42 @@ end;
 function CheckLic(Login, PasHash: string): String;
 begin
   result:='';
-  //result:='Лицензия не прошла проверку';
-  //result:=checkUser(authorization.UserID);
+  //result:='Ошибка лицензии';
   authorization.Demo:=True;
   //authorization.Demo:=False;
   authorization.LicCount:=15;
   authorization.LicName:='Kit-tech';
   authorization.UserID:=0;
-  //checkCompetency(authorization.UserID)
   authorization.CanEdit:=False;
   authorization.competency1:=False;
   authorization.competency2:=False;
   authorization.competency3:=False;
   authorization.competency4:=False;
+  
+  if not(result='') then exit;
+
+  DataM.ZQtemp.SQL.Clear;
+  DataM.ZQtemp.SQL.Add(' Select*from users');
+  DataM.ZQtemp.SQL.Add(' where login = '''+Login+'''');
+  DataM.ZQtemp.Open;
+  result:='Ошибка авторизации';
+  While not DataM.ZQtemp.EOF do begin
+   if PasHash=DataM.ZQtemp.FieldByName('PasHash').AsString then
+   begin
+     result:='';
+     authorization.UserID:=DataM.ZQtemp.FieldByName('id').AsInteger;
+     authorization.UserName:=DataM.ZQtemp.FieldByName('short_name').AsString;
+     //checkCompetency(authorization.UserID)
+     //authorization.CanEdit:=DataM.ZQtemp.FieldByName('PasHash').As;
+     authorization.competency1:=DataM.ZQtemp.FieldByName('competency1').AsBoolean;
+     authorization.competency2:=DataM.ZQtemp.FieldByName('competency2').AsBoolean;
+     authorization.competency3:=DataM.ZQtemp.FieldByName('competency3').AsBoolean;
+     authorization.competency4:=DataM.ZQtemp.FieldByName('competency4').AsBoolean;
+   end;
+   DataM.ZQtemp.Next;
+  end;
+  //result:='Лицензия не прошла проверку';
+  //result:=checkUser(authorization.UserID);
 end;
 
 function GetHash(Pas: string): string;
