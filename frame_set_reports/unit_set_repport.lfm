@@ -1,0 +1,58 @@
+object FrameSetReport: TFrameSetReport
+  Left = 0
+  Height = 341
+  Top = 0
+  Width = 638
+  ClientHeight = 341
+  ClientWidth = 638
+  TabOrder = 0
+  DesignLeft = 589
+  DesignTop = 227
+  object StringGrid1: TStringGrid
+    Left = 0
+    Height = 316
+    Top = 0
+    Width = 638
+    Align = alClient
+    AutoFillColumns = True
+    Color = clDefault
+    ColCount = 2
+    FixedColor = clNone
+    Flat = True
+    TabOrder = 0
+    ColWidths = (
+      111
+      526
+    )
+    Cells = (
+      6
+      0
+      0
+      'Тип отчёта'
+      0
+      1
+      'Реестр паспортов'
+      0
+      2
+      'Участок пути (баз.)'
+      0
+      3
+      'Узел (баз.)'
+      0
+      4
+      'Эпюр (баз.)'
+      1
+      0
+      'Путь к шаблону отчёта (может отсутствовать)'
+    )
+  end
+  object Button1: TButton
+    Left = 0
+    Height = 25
+    Top = 316
+    Width = 638
+    Align = alBottom
+    Caption = 'Подтвердить изменения'
+    TabOrder = 1
+  end
+end

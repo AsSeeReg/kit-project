@@ -1,0 +1,170 @@
+object FrameSettingsElements: TFrameSettingsElements
+  Left = 0
+  Height = 474
+  Top = 0
+  Width = 549
+  ClientHeight = 474
+  ClientWidth = 549
+  TabOrder = 0
+  DesignLeft = 566
+  DesignTop = 262
+  object DBSetElements: TDBGrid
+    Left = 0
+    Height = 440
+    Top = 34
+    Width = 549
+    Align = alClient
+    AutoFillColumns = True
+    BorderStyle = bsNone
+    Color = clWindow
+    Columns = <    
+      item
+        Title.Caption = 'id'
+        Width = 0
+        Visible = False
+        FieldName = 'id'
+      end    
+      item
+        Title.Caption = 'group_name'
+        Width = 532
+        FieldName = 'group_name'
+      end>
+    DataSource = DSSetElements
+    FixedCols = 0
+    Options = [dgEditing, dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgDisableInsert]
+    Scrollbars = ssVertical
+    TabOrder = 0
+    TitleStyle = tsNative
+  end
+  object ToolBar1: TToolBar
+    Left = 0
+    Height = 34
+    Top = 0
+    Width = 549
+    AutoSize = True
+    ButtonHeight = 32
+    ButtonWidth = 32
+    Caption = 'ToolBar1'
+    Images = DataM.IL_32
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 1
+    object ToolButton1: TToolButton
+      Left = 1
+      Top = 2
+      Action = ActionElementAdd
+    end
+    object ToolButton2: TToolButton
+      Left = 37
+      Top = 2
+      Action = ActionElementGroupAdd
+    end
+    object ToolButton3: TToolButton
+      Left = 73
+      Top = 2
+      Action = ActionElementDel
+    end
+    object ToolButton4: TToolButton
+      Left = 109
+      Top = 2
+      Action = ActionElementGroupDel
+    end
+  end
+  object ZTSetElements: TZTable
+    Connection = DataM.ZConnection1
+    Filtered = True
+    TableName = 'elements_type'
+    ShowRecordTypes = [usUnmodified, usModified]
+    MasterFields = 'id'
+    Options = []
+    left = 192
+    top = 64
+    object ZTSetElementsid: TLargeintField
+      FieldKind = fkData
+      FieldName = 'id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object ZTSetElementselem_type_name: TStringField
+      FieldKind = fkData
+      FieldName = 'elem_type_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 1020
+    end
+    object ZTSetElementselem_group_id: TLargeintField
+      FieldKind = fkData
+      FieldName = 'elem_group_id'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+    end
+  end
+  object DSSetElements: TDataSource
+    DataSet = ZTSetElements
+    left = 192
+    top = 128
+  end
+  object ZTSetElementsGroup: TZTable
+    Connection = DataM.ZConnection1
+    TableName = 'elements_group'
+    left = 320
+    top = 64
+    object ZTSetElementsid1: TLargeintField
+      FieldKind = fkData
+      FieldName = 'id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object ZTSetElementsgroup_name1: TStringField
+      FieldKind = fkData
+      FieldName = 'group_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 1020
+    end
+  end
+  object ActionList1: TActionList
+    Images = DataM.IL_32
+    left = 32
+    top = 64
+    object ActionElementGroupAdd: TAction
+      Caption = 'ActionElementGroupAdd'
+      Hint = 'Добавить группу'
+      ImageIndex = 2
+      OnExecute = ActionElementGroupAddExecute
+    end
+    object ActionElementAdd: TAction
+      Caption = 'ActionElementAdd'
+      Hint = 'Добавить элемент'
+      ImageIndex = 0
+      OnExecute = ActionElementAddExecute
+    end
+    object ActionElementGroupDel: TAction
+      Caption = 'ActionElementGroupDel'
+      Hint = 'Удалить группу'
+      ImageIndex = 3
+      OnExecute = ActionElementGroupDelExecute
+    end
+    object ActionElementDel: TAction
+      Caption = 'ActionElementDel'
+      Hint = 'Удалить элемент'
+      ImageIndex = 1
+      OnExecute = ActionElementDelExecute
+    end
+  end
+end

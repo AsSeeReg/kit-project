@@ -1,0 +1,571 @@
+object FramePassportObjects: TFramePassportObjects
+  Left = 0
+  Height = 644
+  Top = 0
+  Width = 738
+  Align = alClient
+  ClientHeight = 644
+  ClientWidth = 738
+  TabOrder = 0
+  DesignLeft = 905
+  DesignTop = 224
+  object GroupBoxObj: TGroupBox
+    Left = 0
+    Height = 406
+    Top = 0
+    Width = 738
+    Align = alClient
+    Caption = 'Объекты'
+    ClientHeight = 386
+    ClientWidth = 734
+    TabOrder = 0
+    object KGridObj: TKGrid
+      Left = 0
+      Height = 268
+      Top = 23
+      Width = 734
+      Align = alClient
+      ColCount = 4
+      Colors.FixedThemedCellLines = clWindow
+      Colors.FixedThemedCellShadow = clWindow
+      DefaultRowHeight = 24
+      FixedRows = 0
+      Options = [goAlignLastCol, goAlwaysShowEditor, goDrawFocusSelected, goEditing, goEnterMoves, goFixedHorzLine, goFixedVertLine, goHeaderAlignment, goHorzLine, goIndicateHiddenCells, goMouseCanHideCells, goMouseOverCells, goRowMoving, goThemes, goThemedCells, goVertLine]
+      PopupMenu = PopupMenuObj
+      RowCount = 1
+      TabOrder = 0
+      OnClick = KGridObjClick
+      OnEditorCreate = KGridObjEditorCreate
+      OnRowMoved = KGridObjRowMoved
+      ColWidths = (
+        64
+        64
+        375
+        224
+      )
+      RowHeights = (
+        24
+      )
+    end
+    object GroupBoxObjProp: TGroupBox
+      Left = 0
+      Height = 90
+      Top = 296
+      Width = 734
+      Align = alBottom
+      AutoSize = True
+      Caption = 'Объект такой-то, свойства'
+      ClientHeight = 70
+      ClientWidth = 730
+      TabOrder = 1
+      object PanelContiguity: TPanel
+        Left = 0
+        Height = 24
+        Top = 46
+        Width = 730
+        Align = alTop
+        BevelOuter = bvNone
+        Caption = 'PanelContiguity'
+        ClientHeight = 24
+        ClientWidth = 730
+        TabOrder = 0
+        object DBComboBoxContiguity: TDBLookupComboBox
+          Left = 138
+          Height = 23
+          Top = 0
+          Width = 592
+          Align = alClient
+          DataField = 'id'
+          DataSource = DataM.DSPasspList
+          ListField = 'pass_name'
+          ListFieldIndex = 0
+          ListSource = DataM.DSPasspList
+          LookupCache = False
+          TabOrder = 0
+        end
+        object Lab4: TLabel
+          Left = 1
+          Height = 22
+          Top = 1
+          Width = 136
+          Align = alLeft
+          BidiMode = bdRightToLeftNoAlign
+          BorderSpacing.Around = 1
+          Caption = '   :Примыкающий путь   '
+          Color = clWindow
+          Layout = tlCenter
+          ParentBidiMode = False
+          ParentColor = False
+          Transparent = False
+        end
+      end
+      object PanelPoint: TPanel
+        Left = 0
+        Height = 23
+        Top = 0
+        Width = 730
+        Align = alTop
+        BevelOuter = bvNone
+        ClientHeight = 23
+        ClientWidth = 730
+        TabOrder = 1
+        object PanelL: TPanel
+          Left = 0
+          Height = 23
+          Top = 0
+          Width = 100
+          Align = alLeft
+          BevelOuter = bvNone
+          ClientHeight = 23
+          ClientWidth = 100
+          TabOrder = 0
+          object LabPoint1: TLabel
+            Left = 1
+            Height = 22
+            Top = 1
+            Width = 98
+            Align = alTop
+            AutoSize = False
+            BidiMode = bdRightToLeftNoAlign
+            BorderSpacing.Around = 1
+            Caption = '   :Пункт начала   '
+            Color = clWindow
+            Layout = tlCenter
+            ParentBidiMode = False
+            ParentColor = False
+            Transparent = False
+          end
+        end
+        object PanelV: TPanel
+          Left = 100
+          Height = 23
+          Top = 0
+          Width = 129
+          Align = alLeft
+          BevelOuter = bvNone
+          ClientHeight = 23
+          ClientWidth = 129
+          TabOrder = 1
+          object EdPoint1: TEdit
+            Left = 0
+            Height = 23
+            Top = 0
+            Width = 129
+            Align = alTop
+            OnChange = EdPoint1Change
+            TabOrder = 0
+            Text = 'EdPoint1'
+          end
+        end
+        object PanelL1: TPanel
+          Left = 234
+          Height = 23
+          Top = 0
+          Width = 100
+          Align = alLeft
+          BevelOuter = bvNone
+          ClientHeight = 23
+          ClientWidth = 100
+          TabOrder = 2
+          object LabPoint2: TLabel
+            Left = 1
+            Height = 22
+            Top = 1
+            Width = 98
+            Align = alTop
+            AutoSize = False
+            BidiMode = bdRightToLeftNoAlign
+            BorderSpacing.Around = 1
+            Caption = '   :Пункт конца   '
+            Color = clWindow
+            Layout = tlCenter
+            ParentBidiMode = False
+            ParentColor = False
+            Transparent = False
+          end
+        end
+        object Splitter4: TSplitter
+          Left = 229
+          Height = 23
+          Top = 0
+          Width = 5
+        end
+        object PanelV1: TPanel
+          Left = 334
+          Height = 23
+          Top = 0
+          Width = 396
+          Align = alClient
+          BevelOuter = bvNone
+          ClientHeight = 23
+          ClientWidth = 396
+          TabOrder = 4
+          object EdPoint2: TEdit
+            Left = 0
+            Height = 23
+            Top = 0
+            Width = 396
+            Align = alTop
+            OnChange = EdPoint2Change
+            TabOrder = 0
+            Text = 'EdPoint2'
+          end
+        end
+      end
+      object PanelTurn: TPanel
+        Left = 0
+        Height = 23
+        Top = 23
+        Width = 730
+        Align = alTop
+        BevelOuter = bvNone
+        ClientHeight = 23
+        ClientWidth = 730
+        TabOrder = 2
+        object PanelL2: TPanel
+          Left = 0
+          Height = 23
+          Top = 0
+          Width = 100
+          Align = alLeft
+          BevelOuter = bvNone
+          ClientHeight = 23
+          ClientWidth = 100
+          TabOrder = 0
+          object LabRad1: TLabel
+            Left = 1
+            Height = 22
+            Top = 1
+            Width = 98
+            Align = alTop
+            AutoSize = False
+            BidiMode = bdRightToLeftNoAlign
+            BorderSpacing.Around = 1
+            Caption = '   :Радиус   '
+            Color = clWindow
+            Layout = tlCenter
+            ParentBidiMode = False
+            ParentColor = False
+            Transparent = False
+          end
+        end
+        object PanelV2: TPanel
+          Left = 100
+          Height = 23
+          Top = 0
+          Width = 129
+          Align = alLeft
+          BevelOuter = bvNone
+          ClientHeight = 23
+          ClientWidth = 129
+          TabOrder = 1
+          object EdRad: TEdit
+            Left = 0
+            Height = 23
+            Top = 0
+            Width = 129
+            Align = alTop
+            OnChange = EdRadChange
+            TabOrder = 0
+            Text = 'EdRad'
+          end
+        end
+        object Splitter5: TSplitter
+          Left = 229
+          Height = 23
+          Top = 0
+          Width = 5
+        end
+        object PanelL3: TPanel
+          Left = 234
+          Height = 23
+          Top = 0
+          Width = 100
+          Align = alLeft
+          BevelOuter = bvNone
+          ClientHeight = 23
+          ClientWidth = 100
+          TabOrder = 3
+          object LabTan1: TLabel
+            Left = 1
+            Height = 22
+            Top = 1
+            Width = 98
+            Align = alTop
+            AutoSize = False
+            BidiMode = bdRightToLeftNoAlign
+            BorderSpacing.Around = 1
+            Caption = '   :Тангенс   '
+            Color = clWindow
+            Layout = tlCenter
+            ParentBidiMode = False
+            ParentColor = False
+            Transparent = False
+          end
+        end
+        object PanelV3: TPanel
+          Left = 334
+          Height = 23
+          Top = 0
+          Width = 396
+          Align = alClient
+          BevelOuter = bvNone
+          Caption = 'PanelV3'
+          ClientHeight = 23
+          ClientWidth = 396
+          TabOrder = 4
+          object EdTan: TEdit
+            Left = 0
+            Height = 23
+            Top = 0
+            Width = 396
+            Align = alTop
+            OnChange = EdTanChange
+            TabOrder = 0
+            Text = 'EdTan'
+          end
+        end
+      end
+    end
+    object Splitter2: TSplitter
+      Cursor = crVSplit
+      Left = 0
+      Height = 5
+      Top = 291
+      Width = 734
+      Align = alBottom
+      ResizeAnchor = akBottom
+      ResizeStyle = rsLine
+    end
+    object DBComboBoxTypeObj: TDBLookupComboBox
+      Left = 0
+      Height = 23
+      Top = 0
+      Width = 734
+      Align = alTop
+      DataField = 'id'
+      DataSource = DSPassObjType
+      KeyField = 'id'
+      ListField = 'obj_type_name'
+      ListFieldIndex = 0
+      ListSource = DSPassObjType
+      LookupCache = False
+      NullValueKey = 48
+      OnChange = DBComboBoxTypeObjChange
+      PopupMenu = PopupMenuObj
+      ScrollListDataset = True
+      TabOrder = 3
+      Visible = False
+    end
+  end
+  object GroupBoxElem: TGroupBox
+    Left = 0
+    Height = 233
+    Top = 411
+    Width = 738
+    Align = alBottom
+    Caption = 'Элементы'
+    ClientHeight = 213
+    ClientWidth = 734
+    TabOrder = 1
+    Visible = False
+    object DBComboBoxTypeEl: TDBLookupComboBox
+      Left = 0
+      Height = 23
+      Top = 0
+      Width = 734
+      Align = alTop
+      ArrowKeysTraverseList = False
+      AutoComplete = True
+      DataField = 'id'
+      DataSource = DSElemType
+      KeyField = 'id'
+      ListField = 'group_name'
+      ListFieldIndex = 0
+      ListSource = DSElemType
+      LookupCache = False
+      OnChange = DBComboBoxTypeElChange
+      TabOrder = 0
+    end
+    object KGridElem: TKGrid
+      Left = 0
+      Height = 167
+      Top = 46
+      Width = 734
+      Align = alClient
+      Colors.FixedThemedCellLines = clWindow
+      Colors.FixedThemedCellShadow = clWindow
+      DefaultRowHeight = 24
+      FixedRows = 0
+      Options = [goAlignLastCol, goAlwaysShowEditor, goDrawFocusSelected, goEditing, goEnterMoves, goFixedHorzLine, goFixedVertLine, goHeaderAlignment, goHorzLine, goIndicateHiddenCells, goMouseCanHideCells, goMouseOverCells, goRowMoving, goThemes, goThemedCells, goVertLine]
+      PopupMenu = PopupMenuElem
+      RowCount = 1
+      TabOrder = 1
+      OnChanged = KGridElemChanged
+      OnEditorCreate = KGridElemEditorCreate
+      OnRowMoved = KGridElemRowMoved
+      ColWidths = (
+        64
+        64
+        364
+        10
+        224
+      )
+      RowHeights = (
+        24
+      )
+    end
+    object DBComboBoxElemTypeMinor: TDBLookupComboBox
+      Left = 0
+      Height = 23
+      Top = 23
+      Width = 734
+      Align = alTop
+      DataField = 'id'
+      DataSource = DSElemTypeMinor
+      KeyField = 'id'
+      ListField = 'elem_type_name'
+      ListFieldIndex = 0
+      ListSource = DSElemTypeMinor
+      LookupCache = False
+      NullValueKey = 48
+      OnChange = DBComboBoxTypeEl_minorChange
+      ScrollListDataset = True
+      TabOrder = 2
+      Visible = False
+    end
+  end
+  object Splitter1: TSplitter
+    Cursor = crVSplit
+    Left = 0
+    Height = 5
+    Top = 406
+    Width = 738
+    Align = alBottom
+    ResizeAnchor = akBottom
+    ResizeStyle = rsLine
+  end
+  object ZQObjects: TZQuery
+    Connection = DataM.ZConnection1
+    Params = <>
+    left = 452
+    top = 42
+  end
+  object ZQPassObjType: TZQuery
+    Connection = DataM.ZConnection1
+    Params = <>
+    left = 452
+    top = 104
+  end
+  object DSPassObjType: TDataSource
+    DataSet = ZQPassObjType
+    left = 360
+    top = 104
+  end
+  object ActionListObjElem: TActionList
+    left = 24
+    top = 42
+    object ActionObjAdd: TAction
+      Category = 'Objects'
+      Caption = 'Добавить объект'
+      OnExecute = ActionObjAddExecute
+    end
+    object ActionObjDel: TAction
+      Category = 'Objects'
+      Caption = 'Удалить объект (со всеми элементами)'
+      OnExecute = ActionObjDelExecute
+    end
+    object ActionElemAdd: TAction
+      Category = 'Elements'
+      Caption = 'Добавить элемент'
+      OnExecute = ActionElemAddExecute
+    end
+    object ActionElemDel: TAction
+      Category = 'Elements'
+      Caption = 'Удолить элемент'
+      OnExecute = ActionElemDelExecute
+    end
+    object ActionObjMove: TAction
+      Category = 'Objects'
+      Caption = 'Переместить в другую ветку'
+    end
+    object ActionElemOld: TAction
+      Category = 'Elements'
+      Caption = 'Демонтирован'
+    end
+    object ActionElemSplit: TAction
+      Category = 'Elements'
+      Caption = 'Разделить элемент'
+    end
+    object ActionElemReplace: TAction
+      Category = 'Elements'
+      Caption = 'Заменить элемент'
+    end
+    object ActionElemColor: TAction
+      Category = 'Elements'
+      Caption = 'Изменить цвет на схемах'
+    end
+  end
+  object PopupMenuObj: TPopupMenu
+    left = 168
+    top = 104
+    object MenuItem1: TMenuItem
+      Action = ActionObjAdd
+      ShortCut = 45
+    end
+    object MenuItem2: TMenuItem
+      Action = ActionObjDel
+    end
+    object MenuItem3: TMenuItem
+      Action = ActionObjMove
+    end
+  end
+  object ZQElements: TZQuery
+    Connection = DataM.ZConnection1
+    Params = <>
+    left = 448
+    top = 344
+  end
+  object ZQElemType: TZQuery
+    Connection = DataM.ZConnection1
+    Params = <>
+    left = 448
+    top = 400
+  end
+  object DSElemType: TDataSource
+    DataSet = ZQElemType
+    left = 360
+    top = 400
+  end
+  object PopupMenuElem: TPopupMenu
+    left = 168
+    top = 400
+    object MenuAddElem: TMenuItem
+      Action = ActionElemAdd
+    end
+    object MenuDelElem: TMenuItem
+      Action = ActionElemDel
+      Caption = 'Удалить элемент'
+    end
+    object MenuItem4: TMenuItem
+      Action = ActionElemOld
+    end
+    object MenuItem5: TMenuItem
+      Action = ActionElemReplace
+    end
+    object MenuItem7: TMenuItem
+      Action = ActionElemColor
+    end
+  end
+  object DSElemTypeMinor: TDataSource
+    DataSet = ZQElemTypeMinor
+    left = 360
+    top = 456
+  end
+  object ZQElemTypeMinor: TZQuery
+    Connection = DataM.ZConnection1
+    Params = <>
+    left = 448
+    top = 464
+  end
+end

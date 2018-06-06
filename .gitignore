@@ -1,0 +1,7 @@
+*.exe
+lib/
+backup/
+pic/
+dll/
+*.7z
+update/

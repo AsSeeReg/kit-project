@@ -1,0 +1,436 @@
+object FrameSetUsers: TFrameSetUsers
+  Left = 0
+  Height = 483
+  Hint = 'Настройка пользователей'
+  Top = 0
+  Width = 630
+  ClientHeight = 483
+  ClientWidth = 630
+  TabOrder = 0
+  DesignLeft = 731
+  DesignTop = 284
+  object RxDBGrid1: TRxDBGrid
+    Left = 0
+    Height = 112
+    Top = 0
+    Width = 630
+    AfterQuickSearch = RxDBGrid1AfterQuickSearch
+    ColumnDefValues.BlobText = '(данные)'
+    TitleButtons = True
+    AutoSort = True
+    Columns = <    
+      item
+        Title.Alignment = taCenter
+        Title.Orientation = toHorizontal
+        Title.Caption = 'Id'
+        Width = 0
+        EditButtons = <>
+        Filter.DropDownRows = 0
+        Filter.EmptyValue = '(Пусто)'
+        Filter.AllValue = '(Все значения)'
+        Filter.EmptyFont.Style = [fsItalic]
+        Filter.ItemIndex = -1
+        Footers = <>
+      end    
+      item
+        SizePriority = 0
+        Title.Alignment = taCenter
+        Title.Orientation = toHorizontal
+        Title.Caption = 'Логин'
+        Width = 97
+        FieldName = 'name'
+        EditButtons = <>
+        Filter.DropDownRows = 0
+        Filter.EmptyValue = '(Пусто)'
+        Filter.AllValue = '(Все значения)'
+        Filter.EmptyFont.Style = [fsItalic]
+        Filter.ItemIndex = -1
+        Footers = <>
+      end    
+      item
+        SizePriority = 0
+        Title.Alignment = taCenter
+        Title.Orientation = toHorizontal
+        Title.Caption = 'Ф.И.О.'
+        Width = 547
+        FieldName = 'comment'
+        EditButtons = <>
+        Filter.DropDownRows = 0
+        Filter.EmptyValue = '(Пусто)'
+        Filter.AllValue = '(Все значения)'
+        Filter.EmptyFont.Style = [fsItalic]
+        Filter.ItemIndex = -1
+        Footers = <>
+      end>
+    KeyStrokes = <    
+      item
+        Command = rxgcShowFindDlg
+        ShortCut = 16454
+        Enabled = True
+      end    
+      item
+        Command = rxgcShowColumnsDlg
+        ShortCut = 16471
+        Enabled = True
+      end    
+      item
+        Command = rxgcShowFilterDlg
+        ShortCut = 16468
+        Enabled = True
+      end    
+      item
+        Command = rxgcShowSortDlg
+        ShortCut = 16467
+        Enabled = True
+      end    
+      item
+        Command = rxgcShowQuickFilter
+        ShortCut = 16465
+        Enabled = True
+      end    
+      item
+        Command = rxgcHideQuickFilter
+        ShortCut = 16456
+        Enabled = True
+      end    
+      item
+        Command = rxgcSelectAll
+        ShortCut = 16449
+        Enabled = True
+      end    
+      item
+        Command = rxgcDeSelectAll
+        ShortCut = 16429
+        Enabled = True
+      end    
+      item
+        Command = rxgcInvertSelection
+        ShortCut = 16426
+        Enabled = True
+      end    
+      item
+        Command = rxgcOptimizeColumnsWidth
+        ShortCut = 16427
+        Enabled = True
+      end    
+      item
+        Command = rxgcCopyCellValue
+        ShortCut = 16451
+        Enabled = True
+      end>
+    FooterOptions.DrawFullLine = False
+    SearchOptions.QuickSearchOptions = [loCaseInsensitive, loPartialKey]
+    SearchOptions.FromStart = False
+    OptionsRx = [rdgAllowColumnsForm, rdgAllowDialogFind, rdgAllowQuickSearch, rdgAllowQuickFilter, rdgAllowFilterForm, rdgAllowSortForm, rdgAllowToolMenu]
+    Align = alClient
+    AutoFillColumns = True
+    Color = clWindow
+    DrawFullLine = False
+    FocusColor = clSkyBlue
+    SelectedColor = clGradientActiveCaption
+    GridLineColor = cl3DLight
+    GridLineStyle = psSolid
+    DataSource = DSUsers
+    FixedCols = 0
+    Options = [dgTitles, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgAlwaysShowSelection, dgCancelOnExit, dgHeaderPushedLook]
+    Scrollbars = ssAutoVertical
+    TabOrder = 0
+    TitleFont.CharSet = RUSSIAN_CHARSET
+    TitleFont.Height = -13
+    TitleFont.Name = 'Arial'
+    TitleFont.Pitch = fpVariable
+    TitleFont.Quality = fqDraft
+    TitleStyle = tsNative
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 371
+    Top = 112
+    Width = 630
+    Align = alBottom
+    AutoSize = True
+    ClientHeight = 371
+    ClientWidth = 630
+    TabOrder = 1
+    object Panel3: TPanel
+      Left = 1
+      Height = 41
+      Top = 251
+      Width = 628
+      Align = alBottom
+      Caption = 'Panel3'
+      ClientHeight = 41
+      ClientWidth = 628
+      Enabled = False
+      TabOrder = 0
+      object CheckBox2: TCheckBox
+        Left = 1
+        Height = 39
+        Top = 1
+        Width = 158
+        Align = alLeft
+        AutoSize = False
+        Caption = 'Руководитель'
+        TabOrder = 0
+      end
+      object Memo2: TMemo
+        Left = 159
+        Height = 39
+        Top = 1
+        Width = 468
+        Align = alClient
+        Lines.Strings = (
+          ' - может помечать паспорта как устаревшие (архивные), утверждать паспорта, '
+          'созданные (изменённые) Оператором'
+          ''
+          ''
+        )
+        ParentColor = True
+        TabOrder = 1
+      end
+    end
+    object Panel4: TPanel
+      Left = 1
+      Height = 41
+      Top = 210
+      Width = 628
+      Align = alBottom
+      Caption = 'Panel4'
+      ClientHeight = 41
+      ClientWidth = 628
+      TabOrder = 1
+      object CheckBox3: TCheckBox
+        Left = 1
+        Height = 39
+        Top = 1
+        Width = 158
+        Align = alLeft
+        AutoSize = False
+        Caption = 'Оператор'
+        TabOrder = 0
+      end
+      object Memo3: TMemo
+        Left = 159
+        Height = 39
+        Top = 1
+        Width = 468
+        Align = alClient
+        Lines.Strings = (
+          ' - может создавать, изменять паспорта и черновики'
+          ''
+        )
+        ParentColor = True
+        TabOrder = 1
+      end
+    end
+    object Panel5: TPanel
+      Left = 1
+      Height = 41
+      Top = 169
+      Width = 628
+      Align = alBottom
+      Caption = 'Panel5'
+      ClientHeight = 41
+      ClientWidth = 628
+      TabOrder = 2
+      object CheckBox4: TCheckBox
+        Left = 1
+        Height = 39
+        Top = 1
+        Width = 159
+        Align = alLeft
+        AutoSize = False
+        Caption = 'Пользователь'
+        TabOrder = 0
+      end
+      object Memo4: TMemo
+        Left = 160
+        Height = 39
+        Top = 1
+        Width = 467
+        Align = alClient
+        Lines.Strings = (
+          ' - может просматривать паспорта, формировать печатные формы'
+          ''
+        )
+        ParentColor = True
+        TabOrder = 1
+      end
+    end
+    object Panel6: TPanel
+      Left = 1
+      Height = 41
+      Top = 128
+      Width = 628
+      Align = alBottom
+      Caption = 'Panel6'
+      ClientHeight = 41
+      ClientWidth = 628
+      TabOrder = 3
+      object CheckBox5: TCheckBox
+        Left = 1
+        Height = 39
+        Top = 1
+        Width = 158
+        Align = alLeft
+        Caption = 'Администратор системы'
+        TabOrder = 0
+      end
+      object Memo5: TMemo
+        Left = 159
+        Height = 39
+        Top = 1
+        Width = 468
+        Align = alClient
+        Lines.Strings = (
+          ' - обладает правами на работу с системными настройками, архивами, '
+          'окончательным удалением данных'
+        )
+        ParentColor = True
+        TabOrder = 1
+      end
+    end
+    object Button1: TButton
+      Left = 1
+      Height = 25
+      Top = 345
+      Width = 628
+      Align = alBottom
+      Caption = 'Подтвердить изменения'
+      TabOrder = 4
+    end
+    object StringGrid1: TStringGrid
+      Left = 1
+      Height = 111
+      Top = 1
+      Width = 628
+      Align = alBottom
+      AutoFillColumns = True
+      Color = clDefault
+      ColCount = 2
+      FixedColor = clNone
+      FixedRows = 0
+      Flat = True
+      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goSmoothScroll]
+      TabOrder = 5
+      ColWidths = (
+        160
+        467
+      )
+      Cells = (
+        5
+        0
+        0
+        'Логин'
+        0
+        1
+        'Фамилия'
+        0
+        2
+        'Имя'
+        0
+        3
+        'Отчество'
+        0
+        4
+        'Сокращённое'
+      )
+    end
+    object Panel2: TPanel
+      Left = 1
+      Height = 16
+      Top = 112
+      Width = 628
+      Align = alBottom
+      Caption = 'Доступные роли пользователя:'
+      TabOrder = 6
+    end
+    object Panel7: TPanel
+      Left = 1
+      Height = 53
+      Top = 292
+      Width = 628
+      Align = alBottom
+      Caption = 'Panel7'
+      ClientHeight = 53
+      ClientWidth = 628
+      TabOrder = 7
+      OnClick = Panel7Click
+      object CheckBox6: TCheckBox
+        Left = 1
+        Height = 51
+        Top = 1
+        Width = 158
+        Align = alLeft
+        AutoSize = False
+        Caption = 'Изменить пороль'
+        TabOrder = 0
+      end
+      object Panel8: TPanel
+        Left = 159
+        Height = 51
+        Top = 1
+        Width = 468
+        Align = alClient
+        Caption = 'Panel8'
+        ClientHeight = 51
+        ClientWidth = 468
+        TabOrder = 1
+        object Edit2: TEdit
+          Left = 1
+          Height = 23
+          Top = 1
+          Width = 466
+          Align = alTop
+          TabOrder = 0
+          Text = '*************'
+        end
+        object Edit3: TEdit
+          Left = 1
+          Height = 23
+          Top = 24
+          Width = 466
+          Align = alTop
+          TabOrder = 1
+          Text = '*************'
+        end
+      end
+    end
+  end
+  object ZTUsers: TZTable
+    Connection = DataM.ZConnection1
+    Filtered = True
+    Active = True
+    TableName = 'users'
+    ShowRecordTypes = [usUnmodified, usModified]
+    MasterFields = 'id'
+    Options = []
+    left = 40
+    top = 40
+    object ZTUsersid: TLargeintField
+      FieldKind = fkData
+      FieldName = 'id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object ZTUserslogin: TMemoField
+      FieldKind = fkData
+      FieldName = 'login'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      BlobType = ftMemo
+      Transliterate = False
+    end
+  end
+  object DSUsers: TDataSource
+    DataSet = ZTUsers
+    left = 144
+    top = 40
+  end
+end

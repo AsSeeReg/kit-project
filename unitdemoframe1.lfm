@@ -1,0 +1,129 @@
+object DemoFrame1: TDemoFrame1
+  Left = 0
+  Height = 444
+  Top = 0
+  Width = 323
+  Align = alClient
+  ClientHeight = 444
+  ClientWidth = 323
+  TabOrder = 0
+  DesignLeft = 526
+  DesignTop = 487
+  object DBGridBranches: TDBGrid
+    Left = 0
+    Height = 444
+    Top = 0
+    Width = 323
+    Align = alClient
+    AutoFillColumns = True
+    BorderStyle = bsNone
+    Color = clWindow
+    Columns = <    
+      item
+        Title.Caption = 'id'
+        Width = 0
+        Visible = False
+        FieldName = 'id'
+      end    
+      item
+        Title.Caption = 'pass_id'
+        Width = 0
+        Visible = False
+        FieldName = 'pass_id'
+      end    
+      item
+        MaxSize = 50
+        Title.Caption = 'Позиция'
+        Width = 102
+        FieldName = 'pos'
+      end    
+      item
+        MaxSize = 50
+        Title.Caption = 'Длина (м.)'
+        Width = 102
+        FieldName = 'length'
+      end    
+      item
+        MaxSize = 50
+        Title.Caption = 'Уклон (‰)'
+        Width = 102
+        FieldName = 'value'
+      end>
+    DataSource = DSDemo1
+    FixedCols = 0
+    Options = [dgEditing, dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
+    Scrollbars = ssVertical
+    TabOrder = 0
+    TitleStyle = tsNative
+  end
+  object DSDemo1: TDataSource
+    DataSet = ZTDemo1
+    left = 112
+    top = 40
+  end
+  object ZTDemo1: TZTable
+    Connection = DataM.ZConnection1
+    SortedFields = 'pos,id'
+    Filtered = True
+    BeforePost = ZTDemo1BeforePost
+    TableName = 'longitudinal_profile'
+    IndexFieldNames = 'pos Asc,id Asc'
+    left = 24
+    top = 40
+    object ZTDemo1id: TLargeintField
+      FieldKind = fkData
+      FieldName = 'id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object ZTDemo1pass_id: TStringField
+      FieldKind = fkData
+      FieldName = 'pass_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 1020
+    end
+    object ZTDemo1pos: TFloatField
+      FieldKind = fkData
+      FieldName = 'pos'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      MaxValue = 0
+      MinValue = 0
+      Precision = 2
+    end
+    object ZTDemo1length: TFloatField
+      FieldKind = fkData
+      FieldName = 'length'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      MaxValue = 0
+      MinValue = 0
+      Precision = 2
+    end
+    object ZTDemo1value: TFloatField
+      FieldKind = fkData
+      FieldName = 'value'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      MaxValue = 0
+      MinValue = 0
+      Precision = 2
+    end
+  end
+end

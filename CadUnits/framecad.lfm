@@ -1,0 +1,123 @@
+object FrameCad: TFrameCad
+  Left = 0
+  Height = 426
+  Top = 0
+  Width = 680
+  Align = alClient
+  ClientHeight = 426
+  ClientWidth = 680
+  OnResize = FrameResize
+  TabOrder = 0
+  DesignLeft = 637
+  DesignTop = 257
+  object ToolBar1: TToolBar
+    Left = 0
+    Height = 34
+    Top = 0
+    Width = 680
+    AutoSize = True
+    ButtonHeight = 32
+    ButtonWidth = 32
+    Caption = 'ToolBar1'
+    Images = DataM.IL_32
+    TabOrder = 0
+    OnClick = ToolBar1Click
+    object ToolButton1: TToolButton
+      Left = 1
+      Top = 2
+      Action = ActionInit
+    end
+    object ToolButton2: TToolButton
+      Left = 37
+      Top = 2
+      Action = ActionTest
+      ParentShowHint = False
+      ShowHint = True
+    end
+    object ToolButton3: TToolButton
+      Left = 81
+      Top = 2
+      Action = ActionPaint1
+      ParentShowHint = False
+      ShowHint = True
+    end
+    object ToolButton4: TToolButton
+      Left = 117
+      Top = 2
+      Action = ActionPaint2
+      ParentShowHint = False
+      ShowHint = True
+    end
+    object ToolButton5: TToolButton
+      Left = 153
+      Top = 2
+      Action = ActionPaint3
+      ParentShowHint = False
+      ShowHint = True
+    end
+    object ToolButton6: TToolButton
+      Left = 73
+      Height = 32
+      Top = 2
+      Width = 8
+      Caption = 'ToolButton6'
+      Style = tbsSeparator
+    end
+  end
+  object CadCaption: TStaticText
+    Left = 0
+    Height = 17
+    Top = 34
+    Width = 680
+    Align = alTop
+    Caption = 'Заголовок построения'
+    TabOrder = 1
+  end
+  object PanelCad: TPanel
+    Left = 0
+    Height = 375
+    Top = 51
+    Width = 680
+    Align = alClient
+    TabOrder = 2
+  end
+  object ActionListCad: TActionList
+    Images = DataM.IL_32
+    left = 47
+    top = 56
+    object ActionClear: TAction
+      Caption = 'ActionClear'
+      ImageIndex = 4
+      OnExecute = ActionClearExecute
+    end
+    object ActionInit: TAction
+      Caption = 'ActionInit'
+      ImageIndex = 4
+      OnExecute = ActionInitExecute
+    end
+    object ActionTest: TAction
+      Caption = 'Блок тестирования'
+      Hint = 'Блок тестирования'
+      ImageIndex = 6
+      OnExecute = ActionTestExecute
+    end
+    object ActionPaint1: TAction
+      Caption = 'Условный план'
+      Hint = 'Условный план'
+      ImageIndex = 5
+      OnExecute = ActionPaint1Execute
+    end
+    object ActionPaint2: TAction
+      Caption = 'Схема'
+      Hint = 'Схема'
+      ImageIndex = 5
+      OnExecute = ActionPaint2Execute
+    end
+    object ActionPaint3: TAction
+      Caption = 'Эпюра'
+      Hint = 'Эпюра'
+      ImageIndex = 5
+      OnExecute = ActionPaint3Execute
+    end
+  end
+end

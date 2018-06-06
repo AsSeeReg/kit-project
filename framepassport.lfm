@@ -1,0 +1,77 @@
+object FramePassport: TFramePassport
+  Left = 0
+  Height = 614
+  Top = 0
+  Width = 641
+  Align = alClient
+  ClientHeight = 614
+  ClientWidth = 641
+  TabOrder = 0
+  DesignLeft = 1204
+  DesignTop = 309
+  object PageControlPassport: TPageControl
+    Left = 0
+    Height = 580
+    Top = 34
+    Width = 641
+    ActivePage = TabSheet2
+    Align = alClient
+    TabIndex = 0
+    TabOrder = 0
+    object TabSheet2: TTabSheet
+      Caption = 'Путь n'
+    end
+  end
+  object ToolBar2: TToolBar
+    Left = 0
+    Height = 34
+    Top = 0
+    Width = 641
+    AutoSize = True
+    ButtonHeight = 32
+    ButtonWidth = 32
+    Caption = 'ToolBar2'
+    Images = DataM.IL_32
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 1
+    object ToolButton4: TToolButton
+      Left = 1
+      Top = 2
+      Action = ActionPassEdit
+    end
+    object ToolButton5: TToolButton
+      Left = 37
+      Top = 2
+      Action = ActionPassPaint
+    end
+    object ToolButton1: TToolButton
+      Left = 73
+      Top = 2
+      Action = ActionPassExport
+    end
+  end
+  object ActionList1: TActionList
+    Images = DataM.IL_32
+    left = 584
+    top = 32
+    object ActionPassEdit: TAction
+      Tag = 1
+      Caption = 'Редактировать'
+      Hint = 'Редактировать'
+      ImageIndex = 7
+      OnExecute = ActionPassEditExecute
+    end
+    object ActionPassPaint: TAction
+      Tag = 1
+      Caption = 'Построение'
+      Hint = 'Построение'
+      ImageIndex = 5
+    end
+    object ActionPassExport: TAction
+      Caption = 'Экспорт печатной формы'
+      Hint = 'Экспорт печатной формы'
+      ImageIndex = 8
+    end
+  end
+end

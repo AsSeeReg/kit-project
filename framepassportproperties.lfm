@@ -1,0 +1,598 @@
+object FramePassportProperties: TFramePassportProperties
+  Left = 0
+  Height = 713
+  Top = 0
+  Width = 606
+  Align = alClient
+  ClientHeight = 713
+  ClientWidth = 606
+  TabOrder = 0
+  DesignLeft = 814
+  DesignTop = 188
+  object PanelVL0: TPanel
+    Left = 0
+    Height = 221
+    Top = 0
+    Width = 606
+    Align = alTop
+    BevelOuter = bvNone
+    Caption = 'PanelVL0'
+    ClientHeight = 221
+    ClientWidth = 606
+    Color = clWindow
+    ParentColor = False
+    TabOrder = 1
+    object PanelL: TPanel
+      Left = 0
+      Height = 221
+      Top = 0
+      Width = 147
+      Align = alLeft
+      AutoSize = True
+      BevelOuter = bvNone
+      ClientHeight = 221
+      ClientWidth = 147
+      TabOrder = 0
+      object Lab1: TLabel
+        Left = 1
+        Height = 22
+        Top = 1
+        Width = 145
+        Align = alTop
+        AutoSize = False
+        BidiMode = bdRightToLeftNoAlign
+        BorderSpacing.Around = 1
+        Caption = '   :Имя паспорта   '
+        Color = clWindow
+        Layout = tlCenter
+        ParentBidiMode = False
+        ParentColor = False
+        Transparent = False
+      end
+      object Lab2: TLabel
+        Left = 1
+        Height = 22
+        Top = 24
+        Width = 145
+        Align = alTop
+        AutoSize = False
+        BidiMode = bdRightToLeftNoAlign
+        BorderSpacing.Around = 1
+        Caption = '   :Тип паспорта   '
+        Color = clWindow
+        Layout = tlCenter
+        ParentBidiMode = False
+        ParentColor = False
+        Transparent = False
+      end
+      object Lab4: TLabel
+        Left = 1
+        Height = 22
+        Top = 93
+        Width = 145
+        Align = alTop
+        AutoSize = False
+        BidiMode = bdRightToLeftNoAlign
+        BorderSpacing.Around = 1
+        Caption = '   :Комментарии   '
+        Color = clWindow
+        Layout = tlCenter
+        ParentBidiMode = False
+        ParentColor = False
+        Transparent = False
+      end
+      object Lab3: TLabel
+        Left = 1
+        Height = 22
+        Top = 47
+        Width = 145
+        Align = alTop
+        AutoSize = False
+        BidiMode = bdRightToLeftNoAlign
+        BorderSpacing.Around = 1
+        Caption = '   :Год постройки   '
+        Color = clWindow
+        Layout = tlCenter
+        ParentBidiMode = False
+        ParentColor = False
+        Transparent = False
+      end
+      object Lab5: TLabel
+        Left = 1
+        Height = 22
+        Top = 70
+        Width = 145
+        Align = alTop
+        AutoSize = False
+        BidiMode = bdRightToLeftNoAlign
+        BorderSpacing.Around = 1
+        Caption = '   :Пути трамвая по   '
+        Color = clWindow
+        Layout = tlCenter
+        ParentBidiMode = False
+        ParentColor = False
+        Transparent = False
+      end
+      object Lab6: TLabel
+        Left = 1
+        Height = 22
+        Top = 129
+        Width = 145
+        Align = alBottom
+        AutoSize = False
+        BidiMode = bdRightToLeftNoAlign
+        BorderSpacing.Around = 1
+        Caption = '   :Примыкает к   '
+        Color = clWindow
+        Layout = tlCenter
+        ParentBidiMode = False
+        ParentColor = False
+        Transparent = False
+      end
+      object Lab7: TLabel
+        Left = 1
+        Height = 22
+        Top = 152
+        Width = 145
+        Align = alBottom
+        AutoSize = False
+        BidiMode = bdRightToLeftNoAlign
+        BorderSpacing.Around = 1
+        Caption = '   :Год реконструкции   '
+        Color = clWindow
+        Layout = tlCenter
+        ParentBidiMode = False
+        ParentColor = False
+        Transparent = False
+      end
+      object Lab10: TLabel
+        Left = 1
+        Height = 22
+        Top = 175
+        Width = 145
+        Align = alBottom
+        AutoSize = False
+        BidiMode = bdRightToLeftNoAlign
+        BorderSpacing.Around = 1
+        Caption = '   :Последние изменения   '
+        Color = clWindow
+        Layout = tlCenter
+        ParentBidiMode = False
+        ParentColor = False
+        Transparent = False
+      end
+      object Lab13: TLabel
+        Left = 1
+        Height = 22
+        Top = 198
+        Width = 145
+        Align = alBottom
+        AutoSize = False
+        BidiMode = bdRightToLeftNoAlign
+        BorderSpacing.Around = 1
+        Caption = '   :Изменения внёс   '
+        Color = clWindow
+        Layout = tlCenter
+        ParentBidiMode = False
+        ParentColor = False
+        Transparent = False
+      end
+    end
+    object PanelV: TPanel
+      Left = 147
+      Height = 221
+      Top = 0
+      Width = 459
+      Align = alClient
+      BevelOuter = bvNone
+      Caption = 'PanelV'
+      ClientHeight = 221
+      ClientWidth = 459
+      TabOrder = 1
+      object EdName: TEdit
+        Left = 0
+        Height = 23
+        Top = 0
+        Width = 459
+        Align = alTop
+        OnChange = EdNameChange
+        TabOrder = 0
+        Text = 'EdName'
+      end
+      object EdYearBuilt: TEdit
+        Left = 0
+        Height = 23
+        Top = 46
+        Width = 459
+        Align = alTop
+        OnChange = EdYearBuiltChange
+        TabOrder = 1
+        Text = 'EdYearBuilt'
+      end
+      object MemoComment: TMemo
+        Left = 0
+        Height = 36
+        Top = 92
+        Width = 459
+        Align = alClient
+        Lines.Strings = (
+          'MemoComment'
+        )
+        OnChange = MemoCommentChange
+        TabOrder = 2
+      end
+      object DBComboBoxType: TDBLookupComboBox
+        Left = 0
+        Height = 23
+        Top = 23
+        Width = 459
+        Align = alTop
+        ListFieldIndex = 0
+        ListSource = DataM.DSPasspTypeList
+        LookupCache = False
+        OnChange = DBComboBoxTypeChange
+        TabOrder = 3
+      end
+      object EdWay: TEdit
+        Left = 0
+        Height = 23
+        Top = 69
+        Width = 459
+        Align = alTop
+        OnChange = EdWayChange
+        TabOrder = 4
+        Text = 'EdWay'
+      end
+      object LbReconst: TLabel
+        Left = 1
+        Height = 22
+        Top = 152
+        Width = 457
+        Align = alBottom
+        AutoSize = False
+        BidiMode = bdRightToLeftNoAlign
+        BorderSpacing.Around = 1
+        Caption = 'автозаполнение по элементам'
+        Color = clWindow
+        Layout = tlCenter
+        ParentBidiMode = False
+        ParentColor = False
+        Transparent = False
+      end
+      object LbContiguity: TLabel
+        Left = 1
+        Height = 22
+        Top = 129
+        Width = 457
+        Align = alBottom
+        AutoSize = False
+        BidiMode = bdRightToLeftNoAlign
+        BorderSpacing.Around = 1
+        Caption = 'автозаполнение по  примыканиям'
+        Color = clWindow
+        Layout = tlCenter
+        ParentBidiMode = False
+        ParentColor = False
+        Transparent = False
+      end
+      object LbLastEdit: TLabel
+        Left = 1
+        Height = 22
+        Top = 175
+        Width = 457
+        Align = alBottom
+        AutoSize = False
+        BidiMode = bdRightToLeftNoAlign
+        BorderSpacing.Around = 1
+        Caption = 'автозаполнение'
+        Color = clWindow
+        Layout = tlCenter
+        ParentBidiMode = False
+        ParentColor = False
+        Transparent = False
+      end
+      object LbUserEdit: TLabel
+        Left = 1
+        Height = 22
+        Top = 198
+        Width = 457
+        Align = alBottom
+        AutoSize = False
+        BidiMode = bdRightToLeftNoAlign
+        BorderSpacing.Around = 1
+        Caption = 'автозаполнение'
+        Color = clWindow
+        Layout = tlCenter
+        ParentBidiMode = False
+        ParentColor = False
+        Transparent = False
+      end
+    end
+  end
+  object GroupBox1: TGroupBox
+    Left = 0
+    Height = 487
+    Top = 226
+    Width = 606
+    Align = alClient
+    Caption = 'Ветки (пути)'
+    ClientHeight = 467
+    ClientWidth = 602
+    TabOrder = 0
+    object DBGridBranches: TDBGrid
+      Left = 0
+      Height = 339
+      Top = 34
+      Width = 602
+      Align = alClient
+      BorderStyle = bsNone
+      Color = clWindow
+      Columns = <      
+        item
+          MaxSize = 30
+          Title.Caption = 'id'
+          Width = 0
+          Visible = False
+          FieldName = 'id'
+        end      
+        item
+          Title.Caption = 'pass_id'
+          Width = 0
+          Visible = False
+          FieldName = 'pass_id'
+        end      
+        item
+          MinSize = 100
+          MaxSize = 400
+          SizePriority = 2
+          Title.Caption = 'Наименование'
+          Width = 200
+          FieldName = 'branch_name'
+        end      
+        item
+          ButtonStyle = cbsPickList
+          MaxSize = 30
+          SizePriority = 0
+          Title.Caption = 'Порядковый номер'
+          Width = 80
+          FieldName = 'pos'
+        end      
+        item
+          SizePriority = 0
+          Title.Caption = 'Эпюр (приоритет)'
+          Width = 110
+          FieldName = 'epure_key'
+        end      
+        item
+          SizePriority = 0
+          Title.Caption = 'Смещение X'
+          Width = 90
+          FieldName = 'pos_x'
+        end      
+        item
+          SizePriority = 0
+          Title.Caption = 'Смещение Y'
+          Width = 90
+          FieldName = 'pos_y'
+        end      
+        item
+          SizePriority = 0
+          Title.Caption = 'Поворот (град.)'
+          Width = 90
+          FieldName = 'pos_ang'
+        end>
+      DataSource = DSBranches
+      FixedCols = 0
+      Options = [dgEditing, dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
+      Scrollbars = ssHorizontal
+      TabOrder = 0
+      TitleStyle = tsNative
+    end
+    object Panel1: TPanel
+      Left = 0
+      Height = 94
+      Top = 373
+      Width = 602
+      Align = alBottom
+      Caption = 'Panel1'
+      ClientHeight = 94
+      ClientWidth = 602
+      TabOrder = 1
+      Visible = False
+      object StringGrid1: TStringGrid
+        Left = 1
+        Height = 92
+        Top = 1
+        Width = 600
+        Align = alClient
+        AutoFillColumns = True
+        BorderStyle = bsNone
+        Color = clNone
+        ColCount = 2
+        FixedColor = clNone
+        FixedRows = 0
+        Options = [goFixedVertLine, goVertLine, goHorzLine, goRowMoving, goEditing, goAlwaysShowEditor, goSmoothScroll, goFixedColSizing, goCellEllipsis]
+        RowCount = 4
+        TabOrder = 0
+        ColWidths = (
+          138
+          462
+        )
+        Cells = (
+          4
+          0
+          0
+          'Эпюр (приоритет):'
+          0
+          1
+          'Смещение по X:'
+          0
+          2
+          'Смещение по Y:'
+          0
+          3
+          'Поворот (град.):'
+        )
+      end
+    end
+    object ToolBar1: TToolBar
+      Left = 0
+      Height = 34
+      Top = 0
+      Width = 602
+      AutoSize = True
+      ButtonHeight = 32
+      ButtonWidth = 32
+      Caption = 'ToolBar1'
+      Images = DataM.IL_32
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 2
+      object ToolButton1: TToolButton
+        Left = 1
+        Top = 2
+        Action = ActionAddBranch
+      end
+      object ToolButton2: TToolButton
+        Left = 37
+        Top = 2
+        Action = ActionDeleteBranch
+      end
+    end
+  end
+  object Splitter1: TSplitter
+    Cursor = crVSplit
+    Left = 0
+    Height = 5
+    Top = 221
+    Width = 606
+    Align = alTop
+    ResizeAnchor = akTop
+    ResizeStyle = rsLine
+  end
+  object ZQProp: TZQuery
+    Connection = DataM.ZConnection1
+    Params = <>
+    left = 24
+    top = 152
+  end
+  object DSBranches: TDataSource
+    DataSet = ZTBranches
+    left = 104
+    top = 216
+  end
+  object ZTBranches: TZTable
+    Connection = DataM.ZConnection1
+    SortedFields = 'pos,id'
+    AfterRefresh = ZTBranchesAfterRefresh
+    Filtered = True
+    BeforePost = ZTBranchesBeforePost
+    AfterPost = ZTBranchesAfterRefresh
+    AfterDelete = ZTBranchesAfterRefresh
+    TableName = 'branch'
+    IndexFieldNames = 'pos Asc,id Asc'
+    left = 112
+    top = 152
+    object ZTBranchesid: TLargeintField
+      FieldKind = fkData
+      FieldName = 'id'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object ZTBranchespass_id: TStringField
+      FieldKind = fkData
+      FieldName = 'pass_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 1020
+    end
+    object ZTBranchesname: TStringField
+      DisplayWidth = 100
+      FieldKind = fkData
+      FieldName = 'branch_name'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object ZTBranchesepure_key: TStringField
+      FieldKind = fkData
+      FieldName = 'epure_key'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object ZTBranchespos: TFloatField
+      FieldKind = fkData
+      FieldName = 'pos'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      MaxValue = 0
+      MinValue = 0
+      Precision = 2
+    end
+    object ZTBranchespos_x: TFloatField
+      FieldKind = fkData
+      FieldName = 'pos_x'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      MaxValue = 0
+      MinValue = 0
+    end
+    object ZTBranchespos_y: TFloatField
+      FieldKind = fkData
+      FieldName = 'pos_y'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      MaxValue = 0
+      MinValue = 0
+    end
+    object ZTBranchespos_ang: TFloatField
+      FieldKind = fkData
+      FieldName = 'pos_ang'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      MaxValue = 0
+      MinValue = 0
+    end
+  end
+  object ActionList: TActionList
+    Images = DataM.IL_32
+    left = 344
+    top = 152
+    object ActionAddBranch: TAction
+      Caption = 'Добавить ветку'
+      ImageIndex = 0
+      OnExecute = ActionAddBranchExecute
+      ShortCut = 16429
+    end
+    object ActionDeleteBranch: TAction
+      Caption = 'Удалить ветку'
+      ImageIndex = 1
+      OnExecute = ActionDeleteBranchExecute
+      ShortCut = 16430
+    end
+  end
+end
