@@ -5,9 +5,10 @@ unit FramePassport;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, ComCtrls, ActnList,
-  StdCtrls, attabs, FramePassportObjects, FramePassportProperties,
-  unit_types_and_const, unit_m_data, unitDemoFrame1, typePaspProp, KGrids;
+  Classes, SysUtils, FileUtil, Forms, Controls, ComCtrls, ActnList, StdCtrls,
+  attabs, FramePassportObjects, FramePassportProperties, unit_types_and_const,
+  unit_m_data, unitDemoFrame1, unit_callback, unit_frame_raport, typePaspProp,
+  KGrids;
 
 type
 
@@ -25,6 +26,8 @@ type
     ToolButton4: TToolButton;
     ToolButton5: TToolButton;
     procedure ActionPassEditExecute(Sender: TObject);
+    procedure ActionPassExportExecute(Sender: TObject);
+    procedure ActionPassPaintExecute(Sender: TObject);
   private
     { private declarations }
     propEdit:Boolean;
@@ -43,13 +46,26 @@ implementation
 {$R *.lfm}
 
 { TFramePassport }
+uses unit_m;
 var
   FPassportProperties:TFramePassportProperties;
+  RaportForm:TForm;
 
 procedure TFramePassport.ActionPassEditExecute(Sender: TObject);
 begin
   ActionPassEdit.Checked:= not ActionPassEdit.Checked;
   Edit:=ActionPassEdit.Checked;
+end;
+
+procedure TFramePassport.ActionPassExportExecute(Sender: TObject);
+begin
+  if (RaportForm<>nil) then FreeAndNil(RaportForm);
+ RaportForm:=ShowFrame(FormM,TFrame(TFrame_Raport.Create(nil,FPassportProperties.PassProp)));
+end;
+
+procedure TFramePassport.ActionPassPaintExecute(Sender: TObject);
+begin
+  FormM.PassportOpenCad(PasspID);
 end;
 
 procedure TFramePassport.setEdit(AValue: Boolean);
@@ -66,11 +82,12 @@ constructor TFramePassport.Create(TheOwner: TComponent; TabOwner: TATTabs;
 var
   i:integer;
   TabSheet:TTabSheet;
-  pass:TPassProp;
   FDemoFrame1:TDemoFrame1;
+  pass:TPassProp;
   strCap:string;
 begin
   inherited Create(TheOwner);
+  RaportForm:=nil;
   self.Parent:=TWinControl(TheOwner);
   pass:= TPassProp.Create(pPasspID,pUserID,DataM.ZConnection1);
   pPasspID:=strtoint(pass.pass_id);
@@ -78,7 +95,7 @@ begin
   self.PasspID:=pPasspID;
   self.UserID :=pUserID;
   self.propEdit:= True;
-  self.ActionPassEdit.Enabled := (authorization.CanEdit);
+  self.ActionPassEdit.Enabled := (authorization.competency3);
   { TODO : Заглушка - переделать тиб из БД }
   //TabOwner.AddTab(-1,'Тип-'+pass.pass_type+': '+pass.pass_name+' (ред.)');
   case StrToInt(pass.pass_type) of

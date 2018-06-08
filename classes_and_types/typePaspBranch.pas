@@ -17,6 +17,10 @@ private
   f_conn          : TZConnection;
   f_pas_id        : integer;
   f_branch_id     : integer;
+  f_epure_key     : string;
+  f_pos_x         : Double;
+  f_pos_y         : Double;
+  f_pos_ang       : Double;
   PassObj         : TPassObj;
   //propEdit: Boolean;
   ZQObjects       : TZQuery;
@@ -28,6 +32,10 @@ public
   property count_pasObj :integer read get_count_pasObj;
   property branch_id    :integer read f_branch_id;
   property branch_name  :string read f_branch_name write f_branch_name;
+  property pos_x  :Double read f_pos_x write f_pos_x;
+  property pos_y  :Double read f_pos_y write f_pos_y;
+  property pos_ang  :Double read f_pos_ang write f_pos_ang;
+  property epure_key  :string read f_epure_key write f_epure_key;
   //property Edit    :Boolean read propEdit  write setEdit; 
   constructor Create(p_pas_id,p_branch_id:integer;conn:TZConnection; TheOwner: TComponent = nil);
   function getPasObject(obj_id:integer):TPassObj;

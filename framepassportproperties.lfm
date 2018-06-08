@@ -7,8 +7,8 @@ object FramePassportProperties: TFramePassportProperties
   ClientHeight = 713
   ClientWidth = 606
   TabOrder = 0
-  DesignLeft = 814
-  DesignTop = 188
+  DesignLeft = 1221
+  DesignTop = 282
   object PanelVL0: TPanel
     Left = 0
     Height = 221

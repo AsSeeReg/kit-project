@@ -22,7 +22,7 @@ const
     $0095B8FF,
     $0088FFFF
     );
-
+    
 type
   
   { TFrameCadPaint }
@@ -353,6 +353,11 @@ procedure TFrameCadPaint.resizeCadCanvas(pWidth, pHeight: integer);
 var
   tempColor:TColor;
 begin
+  
+    //CadBrush.Color := backgroundColor;
+  //CadBrush.Style := bsSolid;
+
+  
   if pWidth <0 then pWidth :=paintbmp.Width;
   if pHeight<0 then pHeight:=paintbmp.Height;
   tempColor:= paintbmp.Canvas.Brush.Color;
@@ -360,6 +365,7 @@ begin
   //MyCanvas.Canvas.Brush.Color:= backgroundColor;
   //paintbmp.Canvas.Pen.Color:= backgroundColor;
   MyCanvas.Color:= backgroundColor;
+  MyCanvas.Style := bsSolid;
   paintbmp.SetSize(pWidth, pHeight);
   paintbmp.Canvas.Brush.Color:= tempColor;
   MyCanvas.Color:= tempColor;  

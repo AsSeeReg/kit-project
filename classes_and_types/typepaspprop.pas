@@ -220,6 +220,10 @@ begin
     while not ZQBranches.EOF do begin
       PassBranch:=TPassBranch.Create(p_pass_id,ZQBranches.FieldByName('id').AsInteger,f_conn,self);
       PassBranch.branch_name:= ZQBranches.FieldByName('branch_name').AsString;
+      PassBranch.pos_x:= ZQBranches.FieldByName('pos_x').AsFloat;
+      PassBranch.pos_y:= ZQBranches.FieldByName('pos_y').AsFloat;
+      PassBranch.pos_ang:= ZQBranches.FieldByName('pos_ang').AsFloat;
+      PassBranch.epure_key:= ZQBranches.FieldByName('epure_key').AsString;
       //PassBranch.addPasObject;
       ////перенести в ветки и убрать из frame passport obj
       //  ZQObjects.SQL.Text:=GetSQL('objects',PassBranch.branch_id);

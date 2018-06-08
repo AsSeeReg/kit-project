@@ -18,7 +18,7 @@ type
 
   TFormM = class(TForm)
     ActionFindType: TAction;
-    ActionShowEditDemo: TAction;
+    ActionShowEdit: TAction;
     ActionSetReports: TAction;
     ActionSetUsers: TAction;
     ActionPasspListRefresh: TAction;
@@ -41,7 +41,6 @@ type
     DBLookupFilterType: TDBLookupComboBox;
     EditFind: TEdit;
     EditFind1: TEdit;
-    Image1: TImage;
     Image3: TImage;
     MenuItemAddPas: TMenuItem;
     MenuItem10: TMenuItem;
@@ -92,13 +91,12 @@ type
     procedure ActionPassportOpenExecute(Sender: TObject);
     procedure ActionSetReportsExecute(Sender: TObject);
     procedure ActionSetUsersExecute(Sender: TObject);
-    procedure ActionShowEditDemoExecute(Sender: TObject);
+    procedure ActionShowEditExecute(Sender: TObject);
     procedure CheckFilterClick(Sender: TObject; Index: integer);
     procedure DBLookupFilterTypeChange(Sender: TObject);
     procedure EditFindChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
-    procedure Image1DblClick(Sender: TObject);
     procedure Image3DblClick(Sender: TObject);
     procedure MenuItemSetEditElemClick(Sender: TObject);
     procedure PassportOpen(Pas_ID:integer;Edit:Boolean= false);
@@ -190,8 +188,8 @@ begin
 
  SetLength(PassportsArr,0);
  if FormLogin.ShowModal<>mrOK then Close;
- ActionShowEditDemo.Execute;
- Caption:=Caption+' lic. "'+authorization.LicName+'"';
+ ActionShowEdit.Execute;
+ Caption:=Caption+' - lic. "'+authorization.LicName+'"';
  if authorization.Demo then Caption:=Caption+' - Demo';
  Caption:=Caption+' - '+authorization.UserName;
  WindowState:=wsFullScreen;
@@ -289,8 +287,6 @@ end;
 
 procedure TFormM.ActionShowMapExecute(Sender: TObject);
 begin
-  //PanelCAD.Align:=alRight;
-  //PanelMap.Align:=alRight;
  if (ActionShowCad.Checked)then
   begin
    if  FrameCad=nil then
@@ -305,14 +301,10 @@ begin
   end;
   PanelCAD.Visible:=ActionShowCad.Checked;
   PanelMap.Visible:=ActionShowMap.Checked;
-  //PanelCAD.Align:=alClient;
-  //PanelMap.Align:=alClient;
 end;
 
 procedure TFormM.ActionShowCadExecute(Sender: TObject);
 begin
-  //PanelCAD.Align:=alRight;
-  //PanelMap.Align:=alRight;
  if (ActionShowCad.Checked)then
   begin
    if  FrameCad=nil then
@@ -327,8 +319,6 @@ begin
   end;
   PanelCAD.Visible:=ActionShowCad.Checked;
   PanelMap.Visible:=ActionShowMap.Checked;
-  //PanelCAD.Align:=alClient;
-  //PanelMap.Align:=alClient;
 end;
 
 procedure TFormM.ActionReconnectExecute(Sender: TObject);
@@ -353,6 +343,7 @@ procedure TFormM.ActionPassportOpenExecute(Sender: TObject);
 begin
  ActivPaspID:=DataM.ZQPasspList.FieldByName('id').AsInteger;
  PassportOpen(ActivPaspID);
+ PassportOpenCad(ActivPaspID);
 end;
 
 procedure TFormM.ActionSetReportsExecute(Sender: TObject);
@@ -367,18 +358,21 @@ begin
  SettingsForm:=ShowFrame(self,TFrame(TFrameSetUsers.Create(nil)));
 end;
 
-procedure TFormM.ActionShowEditDemoExecute(Sender: TObject);
+procedure TFormM.ActionShowEditExecute(Sender: TObject);
 begin
- if (AppIsInit) and authorization.Demo then authorization.CanEdit:=not(ActionShowEditDemo.Checked);
- ActionShowEditDemo.Visible :=authorization.Demo;
+ if (AppIsInit) and authorization.Demo then begin
+  //ActionShowEdit.Checked:=not ActionShowEdit.Checked;
+  authorization.competency3:=not(ActionShowEdit.Checked);
+ end;
+ ActionShowEdit.Visible :=authorization.Demo;
  ToolBar2.AutoSize :=not authorization.Demo;
- ActionShowEditDemo.Checked :=authorization.CanEdit;
- MenuItemAddPas.Enabled     :=authorization.CanEdit;
- MenuItemApprovPas.Enabled  :=authorization.CanEdit;
- MenuItemDelPas.Enabled     :=authorization.CanEdit;
- MenuItemEdPas.Enabled      :=authorization.CanEdit;
- miSettingsElements.Enabled :=authorization.CanEdit;
- MenuItemSetReports.Enabled :=authorization.CanEdit;
+ ActionShowEdit.Checked :=authorization.competency3;
+ MenuItemAddPas.Enabled     :=authorization.competency3;
+ MenuItemApprovPas.Enabled  :=authorization.competency3;
+ MenuItemDelPas.Enabled     :=authorization.competency3;
+ MenuItemEdPas.Enabled      :=authorization.competency3;
+ miSettingsElements.Enabled :=authorization.competency3;
+ MenuItemSetReports.Enabled :=authorization.competency3;
 end;
 
 procedure TFormM.CheckFilterClick(Sender: TObject; Index: integer);
@@ -425,11 +419,6 @@ begin
  PanelList.Width:=round(FormM.Width*0.25);
  PanelCAD.Width:=round(FormM.Width*0.5);
  PanelMap.Width:=round(FormM.Width*0.5);
-end;
-
-procedure TFormM.Image1DblClick(Sender: TObject);
-begin
-  if OpenPictureDialog1.Execute then Image1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
 end;
 
 procedure TFormM.Image3DblClick(Sender: TObject);

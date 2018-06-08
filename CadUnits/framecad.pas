@@ -20,6 +20,8 @@ type
   { TFrameCad }
 
   TFrameCad = class(TFrame)
+    ActionScaleMinus: TAction;
+    ActionScalePlas: TAction;
     ActionPaint3: TAction;
     ActionPaint2: TAction;
     ActionPaint1: TAction;
@@ -29,6 +31,7 @@ type
     ActionListCad: TActionList;
     CadCaption: TStaticText;
     PanelCad: TPanel;
+    StatusBar1: TStatusBar;
     ToolBar1: TToolBar;
     ToolButton1: TToolButton;
     ToolButton2: TToolButton;
@@ -36,11 +39,15 @@ type
     ToolButton4: TToolButton;
     ToolButton5: TToolButton;
     ToolButton6: TToolButton;
+    ToolButton7: TToolButton;
+    ToolButton8: TToolButton;
     procedure ActionClearExecute(Sender: TObject);
     procedure ActionInitExecute(Sender: TObject);
     procedure ActionPaint1Execute(Sender: TObject);
     procedure ActionPaint2Execute(Sender: TObject);
     procedure ActionPaint3Execute(Sender: TObject);
+    procedure ActionScaleMinusExecute(Sender: TObject);
+    procedure ActionScalePlasExecute(Sender: TObject);
     procedure ActionTestExecute(Sender: TObject);
     procedure CadAreaDblClick(Sender: TObject);
     procedure CadAreaMouseDown(Sender: TObject; Button: TMouseButton;
@@ -52,6 +59,7 @@ type
     { private declarations }
     moveX: integer;
     moveY: integer;
+    scale: integer;
     function getCaption(): string;
     procedure setCaption(Value: string);
     //схема
@@ -88,15 +96,17 @@ implementation
 
 procedure TFrameCad.ActionClearExecute(Sender: TObject);
 begin
-  CadPaint.resizeCadCanvas(3000, 1000);
+  CadPaint.resizeCadCanvas(1000, 1000);
   CadPen := CadCanvas.Pen;
   CadPen.Color := clBlack;
   CadPen.Width := 2;
   CadBrush := CadCanvas.Brush;
-  CadBrush.Color := backgroundColor;
-  CadBrush.Style := bsSolid;
+  //CadBrush.Color := backgroundColor;
+  //CadBrush.Style := bsSolid;
+  CadPaint.resizeCadCanvas(2000, 2000);
   CadCanvas.Clear;
   CadCanvas.Clear;
+  StatusBar1.Panels[0].Text:='Масштаб [ ] '+inttostr(scale);
 end;
 
 procedure TFrameCad.ActionInitExecute(Sender: TObject);
@@ -124,6 +134,18 @@ procedure TFrameCad.ActionPaint3Execute(Sender: TObject);
 begin
   if p_passport <> nil
     then paintEpure(p_passport);
+end;
+
+procedure TFrameCad.ActionScaleMinusExecute(Sender: TObject);
+begin
+  scale:=round(scale/2);
+  StatusBar1.Panels[0].Text:='Масштаб [-] '+inttostr(scale);
+end;
+
+procedure TFrameCad.ActionScalePlasExecute(Sender: TObject);
+begin
+  scale:=round(scale*2);
+  StatusBar1.Panels[0].Text:='Масштаб [+] '+inttostr(scale);
 end;
 
 procedure TFrameCad.ActionTestExecute(Sender: TObject);
@@ -352,17 +374,31 @@ begin
   ActionInit.Execute;
   passType:=strtoint(p_passport.pass_type);
    if passType = 0//фрагмент
-    then paintConditional(p_passport) 
+    then
+    begin
+      scale:=2;
+      paintConditional(p_passport);
+    end
     else
    if passType = 1//участок
-    then paintConditional(p_passport) 
+    then
+    begin
+      scale:=2;
+      paintConditional(p_passport)
+    end
     else
    if passType = 2//узел
-    then paintScheme(p_passport) 
+    then begin
+      scale:=20;
+      paintScheme(p_passport)
+    end
     else
    if passType = 3//эпюр
-    then paintEpure(p_passport);
-  //ActionTest.Execute;
+    then
+    begin
+      scale:=100;
+     paintEpure(p_passport);
+    end;
 end;
 
 procedure TFrameCad.paintConditional(passport: TPassProp);
@@ -381,7 +417,7 @@ end;
 var
   obj, pen, prof: TPoint;
   elem: array [0..1] of array of elemTemp;
-  i, j, k, m, len, spin, p_rad, scale, group_id, color_id: integer;
+  i, j, k, m, len, spin, p_rad, group_id, color_id: integer;
   branch: TPassBranch;
   passObj: TPassObj;
   passElem: TPassElem;
@@ -398,7 +434,6 @@ begin
   directories := TDirectories.Create(passport.f_conn); //вынисти в общие и не пересоздавать
   ActionClear.Execute;
   p_rad := 2;
-  scale := 2;
   spin := 10 * scale;
   pen.x := 20 * scale;
   pen.y := 0;
@@ -430,12 +465,14 @@ begin
     for i := 0 to passport.ComponentCount - 1 do
     begin
       try
+        if not(passport.Components[i] is TPassBranch) then Continue;
         CadPen.Width := 2;
         branch := TPassBranch(passport.Components[i]);
-        obj.x := pen.x;
+        obj.x := pen.x+round(branch.pos_x * scale);
         obj.y := pen.y;
         //CadPaint.paintLine(10 * scale, obj.y, CadCanvas.Width, obj.y);
-        CadPaint.paintText(10 * scale, obj.y+spin, 'Ветка ' + branch.branch_name);
+        //CadPaint.paintText(10 * scale, obj.y+spin, 'Ветка ' + branch.branch_name);
+        CadPaint.paintText(10 * scale, obj.y+spin, branch.branch_name);
         obj.y := obj.y + 40 * scale;
         if CadCanvas.Height < obj.y + 20 * scale then
           CadPaint.resizeCadCanvas(-1, obj.y + 20 * scale);
@@ -565,7 +602,7 @@ end;
 procedure TFrameCad.paintScheme(passport: TPassProp);
 var
   pen,pos0: TCursor;
-  i,j,scale: integer;
+  i,j: integer;
   len,rad,angle:single;
   branch: TPassBranch;
   passObj: TPassObj;
@@ -573,7 +610,6 @@ begin
   // Обновляем или заполняем объекты-справочники
   if passport = nil then exit;
   ActionClear.Execute;
-  scale := 20;
   pos0.x := 20;
   pos0.y := 900;
   pos0.angle := 0;
@@ -582,7 +618,11 @@ begin
     begin
       try
         branch := TPassBranch(passport.Components[i]);
-        pen:=pos0;
+        pen.x:=pos0.x + branch.pos_x * scale;
+        pen.y:=pos0.y + branch.pos_y * scale;
+        //pen.x:=pos0.x + branch.pos_x * cos((branch.pos_ang+90)*pi/180) * scale;
+        //pen.y:=pos0.y + branch.pos_y * sin((branch.pos_ang+90)*pi/180) * scale;
+        pen.angle:=pos0.angle + branch.pos_ang;
         for j := 0 to branch.ComponentCount - 1 do
           try
             //if i>0 then break;//только 1 ветка
@@ -633,7 +673,7 @@ end;
 procedure TFrameCad.paintEpure(passport: TPassProp);
 var
   pen,pos0: TCursor;
-  i,j,scale: integer;
+  i,j: integer;
   len,rad,angle:single;
   branch: TPassBranch;
   passObj: TPassObj;
@@ -641,7 +681,6 @@ begin
   // Обновляем или заполняем объекты-справочники
   if passport = nil then exit;
   ActionClear.Execute;
-  scale := 100;
   pos0.x := 20;
   pos0.y := 400;
   pos0.angle := 0;

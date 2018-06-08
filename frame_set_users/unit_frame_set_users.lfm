@@ -256,7 +256,7 @@ object FrameSetUsers: TFrameSetUsers
         Align = alClient
         Lines.Strings = (
           ' - может просматривать паспорта, формировать печатные формы'
-          ''
+          '(необходима для авторизации)'
         )
         ParentColor = True
         TabOrder = 1

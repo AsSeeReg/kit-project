@@ -11,7 +11,7 @@ uses
 unit_types_and_const, FramePassportProperties, FramePassportObjects,
 FramePassport, unit_login, typePaspProp, typePaspObj, typePaspBranch,
 typePaspElem, FrameSettingsElements, frameCad, unitDemoFrame1, lhelpcontrolpkg, 
-unit_frame_set_users, unit_set_repport;
+unit_frame_set_users, unit_set_repport, unit_frame_raport;
 
 {$R *.res}
 begin

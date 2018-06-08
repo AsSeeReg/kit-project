@@ -27,7 +27,6 @@ type
 
 type
   TLicRec = record
-    CanEdit:Boolean;
     Demo:Boolean;
     LicCount:Integer;
     LicName:String;
@@ -93,13 +92,12 @@ end;
 function CheckLic(Login, PasHash: string): String;
 begin
   result:='';
-  //result:='Ошибка лицензии';
+  //result:='Лицензия не прошла проверку';
   authorization.Demo:=True;
   //authorization.Demo:=False;
   authorization.LicCount:=15;
   authorization.LicName:='Kit-tech';
   authorization.UserID:=0;
-  authorization.CanEdit:=False;
   authorization.competency1:=False;
   authorization.competency2:=False;
   authorization.competency3:=False;
@@ -115,21 +113,20 @@ begin
   While not DataM.ZQtemp.EOF do begin
    if PasHash=DataM.ZQtemp.FieldByName('PasHash').AsString then
    begin
-     result:='';
      authorization.UserID:=DataM.ZQtemp.FieldByName('id').AsInteger;
      authorization.UserName:=DataM.ZQtemp.FieldByName('short_name').AsString;
-     //checkCompetency(authorization.UserID)
-     //authorization.CanEdit:=DataM.ZQtemp.FieldByName('PasHash').As;
      authorization.competency1:=DataM.ZQtemp.FieldByName('competency1').AsBoolean;
      authorization.competency2:=DataM.ZQtemp.FieldByName('competency2').AsBoolean;
      authorization.competency3:=DataM.ZQtemp.FieldByName('competency3').AsBoolean;
      authorization.competency4:=DataM.ZQtemp.FieldByName('competency4').AsBoolean;
+     if  authorization.competency1 or authorization.competency2
+      or authorization.competency3 or authorization.competency4
+      then result:=''
+      else result:='У пользователя нет активных ролей';
    end;
    DataM.ZQtemp.Next;
   end;
-  //result:='Лицензия не прошла проверку';
-  //result:=checkUser(authorization.UserID);
-end;
+  end;
 
 function GetHash(Pas: string): string;
 begin
