@@ -10,11 +10,11 @@ uses
 , Graphics
 , Clipbrd
 , LCLIntf
-, LCLType, unit_types_and_const
+, LCLType, StdCtrls, unit_types_and_const
   ;
 
 const
-    backgroundColor:TColor = $e2f7df;
+    backgroundColor:TColor =$f4fcf3;//$e2f7df;
     ColorArr: Array [0..4] of TColor = (
     $00FF8080,
     $0037FF9B,
@@ -41,6 +41,9 @@ type
     btnPaste: TBitBtn;
     btnResize: TBitBtn;
     btnSave: TBitBtn;
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
     CanvasScroller: TScrollBox;
     ImageList1: TImageList;
     LineColor: TColorButton;
@@ -66,6 +69,9 @@ type
     procedure ActionPicResizeExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
     procedure btnCopyClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
     procedure LineColorColorChanged(Sender: TObject);
     procedure MyCanvasMouseDown(Sender: TObject; Button: TMouseButton; 
       Shift: TShiftState; X, Y: Integer);
@@ -83,6 +89,7 @@ type
     { public declarations }
     paintbmp: TBitmap;
     constructor Create(TheOwner: TComponent); override;
+    procedure Clear();
     procedure resizeCadCanvas(pWidth,pHeight: integer);
     procedure paintLine(x1,y1,x2,y2:integer);
     procedure paintText(x1,y1:Double;pText:string);
@@ -219,6 +226,27 @@ begin
 
 end;
 
+procedure TFrameCadPaint.Button1Click(Sender: TObject);
+begin
+  MyCanvasPaint(Sender);
+end;
+
+procedure TFrameCadPaint.Button2Click(Sender: TObject);
+begin
+    paintbmp.SetSize(paintbmp.Width+20, paintbmp.Height+20);
+    MyCanvasPaint(Sender);
+    paintbmp.Canvas.Brush.Style:=bsSolid;
+    paintbmp.Canvas.Brush.Color:=backgroundColor;
+    paintbmp.Canvas.FloodFill(paintbmp.Width-1, paintbmp.Height-1, clBlack, fsSurface);
+    MyCanvasPaint(Sender);
+end;
+
+procedure TFrameCadPaint.Button3Click(Sender: TObject);
+begin
+  paintbmp.Canvas.Clear;
+  MyCanvasPaint(Sender);
+end;
+
 procedure TFrameCadPaint.LineColorColorChanged(Sender: TObject);
 begin
   paintbmp.Canvas.Pen.Color:=LineColor.ButtonColor;
@@ -349,27 +377,37 @@ begin
   ActionNew.Execute;
 end;
 
+procedure TFrameCadPaint.Clear;
+begin
+  paintbmp.Canvas.Clear;
+  MyCanvasPaint(nil);
+end;
+
 procedure TFrameCadPaint.resizeCadCanvas(pWidth, pHeight: integer);
 var
   tempColor:TColor;
 begin
+  //tempColor:= paintbmp.Canvas.Brush.Color;
   
     //CadBrush.Color := backgroundColor;
   //CadBrush.Style := bsSolid;
 
   
-  if pWidth <0 then pWidth :=paintbmp.Width;
-  if pHeight<0 then pHeight:=paintbmp.Height;
-  tempColor:= paintbmp.Canvas.Brush.Color;
-  paintbmp.Canvas.Brush.Color:= backgroundColor;
-  //MyCanvas.Canvas.Brush.Color:= backgroundColor;
-  //paintbmp.Canvas.Pen.Color:= backgroundColor;
-  MyCanvas.Color:= backgroundColor;
-  MyCanvas.Style := bsSolid;
+  if pWidth <1 then pWidth :=paintbmp.Width+1;
+  if pHeight<1 then pHeight:=paintbmp.Height+1;
+  
+  
+  paintbmp.Canvas.Brush.Color := backgroundColor;
+  paintbmp.Canvas.Brush.Style := bsSolid;
+  
   paintbmp.SetSize(pWidth, pHeight);
-  paintbmp.Canvas.Brush.Color:= tempColor;
-  MyCanvas.Color:= tempColor;  
+  paintbmp.Canvas.FloodFill(pWidth-1, pHeight-1, clBlack, fsSurface);
+  //paintbmp.Canvas.Clear;
+  
   MyCanvasPaint(nil);
+  
+  //MyCanvas.Color:= tempColor;
+  //paintbmp.Canvas.Brush.Color:= tempColor;
 end;
 
 procedure TFrameCadPaint.paintLine(x1, y1, x2, y2: integer);

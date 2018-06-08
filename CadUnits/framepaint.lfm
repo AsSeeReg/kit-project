@@ -780,7 +780,6 @@ object FrameCadPaint: TFrameCadPaint
     ClientHeight = 601
     ClientWidth = 112
     TabOrder = 1
-    Visible = False
     object btnCopy: TBitBtn
       Left = 0
       Height = 32
@@ -843,6 +842,36 @@ object FrameCadPaint: TFrameCadPaint
       ParentShowHint = False
       ShowHint = True
       TabOrder = 5
+    end
+    object Button1: TButton
+      Left = 0
+      Height = 25
+      Top = 192
+      Width = 112
+      Align = alTop
+      Caption = 'MyCanvasPaint'
+      OnClick = Button1Click
+      TabOrder = 6
+    end
+    object Button2: TButton
+      Left = 0
+      Height = 25
+      Top = 217
+      Width = 112
+      Align = alTop
+      Caption = 'test'
+      OnClick = Button2Click
+      TabOrder = 7
+    end
+    object Button3: TButton
+      Left = 0
+      Height = 25
+      Top = 242
+      Width = 112
+      Align = alTop
+      Caption = 'test2'
+      OnClick = Button3Click
+      TabOrder = 8
     end
   end
   object CanvasScroller: TScrollBox

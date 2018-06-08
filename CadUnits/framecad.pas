@@ -75,7 +75,7 @@ type
   public
     { public declarations }
     CadPaint: TFrameCadPaint;
-    CadCanvas: TCanvas;
+    CadCanvas: TCanvas;//убрать в приват
     CadPen: TPen;
     CadBrush: TBrush;
     p_passport: TPassProp;
@@ -96,25 +96,21 @@ implementation
 
 procedure TFrameCad.ActionClearExecute(Sender: TObject);
 begin
-  CadPaint.resizeCadCanvas(1000, 1000);
   CadPen := CadCanvas.Pen;
   CadPen.Color := clBlack;
-  CadPen.Width := 2;
+  CadPen.Width := 1;
   CadBrush := CadCanvas.Brush;
-  //CadBrush.Color := backgroundColor;
-  //CadBrush.Style := bsSolid;
-  CadPaint.resizeCadCanvas(2000, 2000);
-  CadCanvas.Clear;
-  CadCanvas.Clear;
+  
+  CadBrush.Color := backgroundColor;
+  CadBrush.Style := bsSolid;
+  
+  CadPaint.resizeCadCanvas(1000, 1000);
+  CadPaint.Clear;
   StatusBar1.Panels[0].Text:='Масштаб [ ] '+inttostr(scale);
 end;
 
 procedure TFrameCad.ActionInitExecute(Sender: TObject);
 begin
-  //CadArea.Left:=     10;
-  //CadArea.Top:=      10;
-  //moveX:=0;
-  //moveY:=0;
   ActionClear.Execute;
 end;
 
