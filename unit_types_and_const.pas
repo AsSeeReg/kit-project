@@ -515,6 +515,19 @@ begin
     sql:=' select (max(id)+1) id from passports'
         ;
   end else
+  //-----------------------
+  if iden='raport_branch' then
+  begin
+    sql:=' select id, pos, obj_type_name, length, rad, max(year) year, group_concat(elem_type_name ,'';'') elem from'
+    +' (select obj.id id, obj.pos pos, obj_type_name, obj.length length, rad, year, elem_type_name  from objects obj'
+    +' left join objects_type obt on obj.obj_type = obt.id'
+    +' left join elements elem on obj.id = elem.object_id '
+    +' left join elements_type elt on elem.elem_type= elt.id '
+    +' where obj.branch_id = '+inttostr(param1) 
+    +' order by obj.pos,obj.id, elem_group_id) tab'
+    +' group by id, pos, obj_type_name, length, rad'
+    ;
+  end else
  //-----------------------
  if iden='del_pass_id' then
  begin

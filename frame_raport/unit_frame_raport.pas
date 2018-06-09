@@ -7,7 +7,8 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, ExtCtrls, Grids, Buttons,
   ActnList, StdCtrls, ComCtrls, Dialogs, Graphics, frameCad, framePaint,
-  typePaspProp, unit_types_and_const, fpspreadsheetgrid, fpsTypes;
+  typePaspProp, typePaspBranch, unit_types_and_const, unit_m_data, ZDataset,
+  fpspreadsheetgrid, fpsTypes;
 
 const
   THICK_BORDER: TsCellBorderStyle = (LineStyle: lsThick; Color: clNavy);
@@ -107,6 +108,7 @@ end;
 
 procedure TFrame_Raport.ActionSelectRapExecute(Sender: TObject);
 begin
+  pPassProp := TPassProp.Create(strtoint(pPassProp.pass_id), 0, DataM.ZConnection1, True);
   //ActionRapDataDemo.Execute;
   ActionRapDataProp.Execute;
   ActionRapDataBranch.Execute;
@@ -135,8 +137,70 @@ begin
 end;
 
 procedure TFrame_Raport.ActionRapDataBranchExecute(Sender: TObject);
+var
+  i: integer;
+  branch:TPassBranch;
+  ZQBranches : TZQuery;
 begin
+  for i := 0 to pPassProp.ComponentCount - 1 do
+  begin
+    if not(pPassProp.Components[i] is TPassBranch) then Continue;
+    branch := TPassBranch(pPassProp.Components[i]);
+  
+    WorksheetGrid.Cells[1,lastRow] := branch.branch_name;
+    WorksheetGrid.MergeCells(1,lastRow, 2,lastRow);
+    WorksheetGrid.HorAlignment[1,lastRow] := haCenter;
+    WorksheetGrid.CellBorders[1,lastRow, 2,lastRow] := [cbSouth];
+    WorksheetGrid.CellBorderStyles[1,lastRow, 2,lastRow, cbSouth] := THICK_BORDER;
+    WorksheetGrid.BackgroundColors[1,lastRow, 2,lastRow] := RGBToColor(230, 230, 230);
+    WorksheetGrid.CellFontColor[1,lastRow] := clNavy;
+    WorksheetGrid.CellFontStyle[1,lastRow] := [fssBold];
+    lastRow:=lastRow+1;
+    
+    WorksheetGrid.Cells[1,lastRow] := 'ID';
+    WorksheetGrid.HorAlignment[1,lastRow] := haCenter;
+    WorksheetGrid.CellFontStyle[1,lastRow] := [fssItalic];
+    WorksheetGrid.CellFontColor[1,lastRow] := clNavy;
+    WorksheetGrid.Cells[2,lastRow] := 'Объект';
+    WorksheetGrid.HorAlignment[2,lastRow] := haCenter;
+    WorksheetGrid.CellFontStyle[2,lastRow] := [fssItalic];
+    WorksheetGrid.CellFontColor[2,lastRow] := clNavy;
+    WorksheetGrid.Cells[3,lastRow] := 'Длина';
+    WorksheetGrid.HorAlignment[3,lastRow] := haCenter;
+    WorksheetGrid.CellFontStyle[3,lastRow] := [fssItalic];
+    WorksheetGrid.CellFontColor[3,lastRow] := clNavy;
+    WorksheetGrid.Cells[4,lastRow] := 'Радиус';
+    WorksheetGrid.HorAlignment[4,lastRow] := haCenter;
+    WorksheetGrid.CellFontStyle[4,lastRow] := [fssItalic];
+    WorksheetGrid.CellFontColor[4,lastRow] := clNavy;
+    WorksheetGrid.Cells[5,lastRow] := 'Год';
+    WorksheetGrid.HorAlignment[5,lastRow] := haCenter;
+    WorksheetGrid.CellFontStyle[5,lastRow] := [fssItalic];
+    WorksheetGrid.CellFontColor[5,lastRow] := clNavy;
+    WorksheetGrid.Cells[6,lastRow] := 'Элементы';
+    WorksheetGrid.HorAlignment[6,lastRow] := haCenter;
+    WorksheetGrid.CellFontStyle[6,lastRow] := [fssItalic];
+    WorksheetGrid.CellFontColor[6,lastRow] := clNavy;
+    lastRow:=lastRow+1;
 
+    
+    ZQBranches:=TZQuery.Create(nil);
+    ZQBranches.Connection:=DataM.ZConnection1;
+    ZQBranches.SQL.Add(GetSQL('raport_branch',branch.branch_id));
+    ZQBranches.Open;
+    ZQBranches.First;
+    while not ZQBranches.EOF do begin
+      WorksheetGrid.Cells[1,lastRow] := ZQBranches.FieldByName('id').AsString;
+      WorksheetGrid.Cells[2,lastRow] := ZQBranches.FieldByName('obj_type_name').AsString; 
+      WorksheetGrid.Cells[3,lastRow] := ZQBranches.FieldByName('length').AsString; 
+      WorksheetGrid.Cells[4,lastRow] := ZQBranches.FieldByName('rad').AsString; 
+      WorksheetGrid.Cells[5,lastRow] := ZQBranches.FieldByName('year').AsString; 
+      WorksheetGrid.Cells[6,lastRow] := ZQBranches.FieldByName('elem').AsString; 
+      lastRow:=lastRow+1;
+      ZQBranches.Next;
+    end;
+  FreeAndNil(ZQBranches);
+  end;
 end;
 
 procedure TFrame_Raport.ActionRapDataDemoExecute(Sender: TObject);
@@ -194,8 +258,8 @@ procedure TFrame_Raport.ActionRapDataPropExecute(Sender: TObject);
 var
   pasType:string;
 begin
-  WorksheetGrid.ColWidths[1] := 180;
-  WorksheetGrid.ColWidths[2] := 300;
+  WorksheetGrid.ColWidths[1] := 150;
+  WorksheetGrid.ColWidths[2] := 150;
   lastRow:=1;
   
   WorksheetGrid.Cells[1,lastRow] := pPassProp.pass_name;

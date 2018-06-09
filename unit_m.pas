@@ -71,8 +71,8 @@ type
     PopupMenuTabs: TPopupMenu;
     RxDBGrid1: TRxDBGrid;
     BBNewPassport: TSpeedButton;
-    Splitter1: TSplitter;
-    Splitter2: TSplitter;
+    SplitterPass: TSplitter;
+    SplitterFind: TSplitter;
     Splitter3: TSplitter;
     TabSheet1: TTabSheet;
     ToolBar1: TToolBar;
@@ -539,8 +539,12 @@ begin
    PanelPassport.Visible:=ActionShowPasp.Checked;
    if PanelPassport.Visible then
     begin
+     PanelPassport.Align:=alLeft;
+     SplitterPass.Align:=alLeft;
      PanelCAD.Align:=alRight;
      PanelMap.Align:=alRight;
+     SplitterPass.Align:=alRight;
+     PanelPassport.Align:=alClient;
     end
    else
    begin

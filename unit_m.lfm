@@ -1,7 +1,7 @@
 object FormM: TFormM
-  Left = 605
+  Left = 479
   Height = 675
-  Top = 327
+  Top = 184
   Width = 1299
   Caption = 'Служба пути'
   ClientHeight = 675
@@ -11583,7 +11583,7 @@ object FormM: TFormM
   OnResize = FormResize
   OnShow = FormShow
   LCLVersion = '1.6.4.0'
-  object Splitter1: TSplitter
+  object SplitterPass: TSplitter
     Left = 799
     Height = 581
     Top = 94
@@ -11592,7 +11592,7 @@ object FormM: TFormM
     ResizeAnchor = akRight
     ResizeStyle = rsLine
   end
-  object Splitter2: TSplitter
+  object SplitterFind: TSplitter
     Left = 491
     Height = 581
     Top = 94

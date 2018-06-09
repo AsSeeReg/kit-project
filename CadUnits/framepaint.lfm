@@ -476,7 +476,6 @@ object FrameCadPaint: TFrameCadPaint
       Width = 38
       Align = alLeft
       Anchors = [akLeft, akBottom]
-      Down = True
       Glyph.Data = {
         36090000424D3609000000000000360000002800000018000000180000000100
         2000000000000009000064000000640000000000000000000000FFFFFF00FFFF
@@ -647,6 +646,7 @@ object FrameCadPaint: TFrameCadPaint
       Width = 38
       Align = alLeft
       Anchors = [akLeft, akBottom]
+      Down = True
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         2000000000000004000064000000640000000000000000000000FFFFFFFFFFFF
