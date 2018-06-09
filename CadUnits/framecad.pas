@@ -54,7 +54,6 @@ type
       Shift: TShiftState; X, Y: integer);
     procedure CadAreaMouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
     procedure FrameResize(Sender: TObject);
-    procedure ToolBar1Click(Sender: TObject);
   private
     { private declarations }
     moveX: integer;
@@ -69,7 +68,7 @@ type
     function toLeftRail (a:TCursor;lenght,angle,RailBetween:double; draw :boolean=true; chording: boolean=false):TCursor;//TMyShape
     function toRight(a:TCursor;lenght,angle:double; draw :boolean=true; chording: boolean=false):TCursor;//TMyShape
     function toRightRail (a:TCursor;lenght,angle,RailBetween:double; draw :boolean=true; chording: boolean=false):TCursor;//TMyShape
-    function chord(a: TCursor; r, angle: double; draw :boolean=true): TCursor;
+    //function chord(a: TCursor; r, angle: double; draw :boolean=true): TCursor;
     //
 
   public
@@ -82,9 +81,9 @@ type
     property Caption: string read getCaption write setCaption;
     constructor Create(TheOwner: TComponent); //override;
     procedure setPassport(Pas_ID: integer; User_ID: integer = -1);
-    procedure paintConditional(passport:TPassProp);
-    procedure paintScheme(passport:TPassProp);
-    procedure paintEpure(passport:TPassProp);
+    function paintConditional(passport:TPassProp;a:TCursor):TCursor;
+    function paintScheme(passport:TPassProp;a:TCursor):TCursor;
+    function paintEpure(passport:TPassProp;a:TCursor):TCursor;
     
   end;
 
@@ -97,6 +96,7 @@ implementation
 procedure TFrameCad.ActionClearExecute(Sender: TObject);
 begin
   CadPen := CadCanvas.Pen;
+  CadPen.Style := psSolid;
   CadPen.Color := clBlack;
   CadPen.Width := 1;
   CadBrush := CadCanvas.Brush;
@@ -107,6 +107,7 @@ begin
   CadPaint.resizeCadCanvas(1000, 1000);
   CadPaint.Clear;
   StatusBar1.Panels[0].Text:='Масштаб [ ] '+inttostr(scale);
+  CadPaint.paintHistoryClear();
 end;
 
 procedure TFrameCad.ActionInitExecute(Sender: TObject);
@@ -117,19 +118,19 @@ end;
 procedure TFrameCad.ActionPaint1Execute(Sender: TObject);
 begin
   if p_passport <> nil
-    then paintConditional(p_passport);
+    then paintConditional(p_passport,Cursor_0);
 end;
 
 procedure TFrameCad.ActionPaint2Execute(Sender: TObject);
 begin
   if p_passport <> nil
-    then paintScheme(p_passport);
+    then paintScheme(p_passport,Cursor_0);
 end;
 
 procedure TFrameCad.ActionPaint3Execute(Sender: TObject);
 begin
   if p_passport <> nil
-    then paintEpure(p_passport);
+    then paintEpure(p_passport,Cursor_0);
 end;
 
 procedure TFrameCad.ActionScaleMinusExecute(Sender: TObject);
@@ -166,19 +167,25 @@ begin
   //pos:=toStright(pos,200);
 
   //testcase rail
-  pos.angle:=0;
+  pos.angle:=90;
+  //pos:=toStrightRail(pos,200,railBetween*20);
+  //pos.angle:=pos.angle+30;
+  //pos:=toStrightRail(pos,200,railBetween*20);
+  //pos.angle:=pos.angle-30;
+  //pos:=toStrightRail(pos,200,railBetween*20);
+  //pos.angle:=pos.angle+30;
   pos:=toStrightRail(pos,200,railBetween*20);
-  pos.angle:=pos.angle+30;
+  pos:=toRight(pos,200,200);
   pos:=toStrightRail(pos,200,railBetween*20);
-  pos.angle:=pos.angle-30;
-  pos:=toStrightRail(pos,200,railBetween*20);
-  pos.angle:=pos.angle+30;
-  pos:=toStrightRail(pos,200,railBetween*20);
-  pos:=toRightRail(pos,200,30,railBetween*20);
-  pos:=toStrightRail(pos,200,railBetween*20);
-  pos:=toLeftRail(pos,200,30,railBetween*20);
-  pos:=toStrightRail(pos,200,railBetween*20);
-
+  pos:=toRight(pos,200,150);
+  //pos:=toStrightRail(pos,200,railBetween*20);
+  //pos:=toRightRail(pos,200,90,railBetween*20);
+  //pos:=toStrightRail(pos,200,railBetween*20);
+  //pos:=toRightRail(pos,200,90,railBetween*20);
+  ////pos:=toStrightRail(pos,200,railBetween*20);
+  //pos:=toLeftRail(pos,200,90,railBetween*20);
+  //pos:=toStrightRail(pos,200,railBetween*20);
+  CadPaint.paintHistoryRepeat();
 end;
 
 procedure TFrameCad.CadAreaDblClick(Sender: TObject);
@@ -233,11 +240,6 @@ begin
   //ActionTest.Execute;
 end;
 
-procedure TFrameCad.ToolBar1Click(Sender: TObject);
-begin
-
-end;
-
 function TFrameCad.getCaption: string;
 begin
   Result := CadCaption.Caption;
@@ -251,12 +253,19 @@ end;
 function TFrameCad.toStright(a: TCursor; lenght: double; draw: boolean
   ): TCursor;
 begin
-  result.x:= a.x+cos(a.angle*pi/180)*lenght;
-  result.y:= a.y+sin(a.angle*pi/180)*lenght;
-  result.angle:= a.angle;
-  if draw then
-   CadPaint.paintLine(round(a.x),round(a.y),round(result.x),round(result.y));
+  result:= CadPaint.toStright(a,lenght,false);
+  CadPaint.paintHistoryAdd(PaintObject(ObjStright,a,lenght,0,'',CadPen.Style,CadPen.Width,CadPen.Color));
 end;
+
+//function TFrameCad.toStright(a: TCursor; lenght: double; draw: boolean
+//  ): TCursor;
+//begin
+//  result.x:= a.x+cos(a.angle*pi/180)*lenght;
+//  result.y:= a.y+sin(a.angle*pi/180)*lenght;
+//  result.angle:= a.angle;
+//  if draw then
+//   CadPaint.paintLine(round(a.x),round(a.y),round(result.x),round(result.y));
+//end;
 
 function TFrameCad.toStrightRail(a: TCursor; lenght, RailBetween: double; 
   draw: boolean): TCursor;
@@ -278,29 +287,36 @@ end;
 
 function TFrameCad.toLeft(a: TCursor; lenght, angle: double; draw: boolean; 
   chording: boolean): TCursor;
-var
-  r:double;
-  b,c:TCursor;
 begin
-  if angle<>0
-  then r:= lenght*180/Pi/angle
-  else r:=MaxCurrency;
-  if chording then
-  begin
-    result:=a;
-    result:=chord(result,r,angle/3,draw);
-    result:=chord(result,r,angle/3,draw);
-    result:=chord(result,r,angle/3,draw);
-  end
-  else
-  begin
-    b:=chord(a,r,angle/2,false);
-    c:=chord(a,r,angle,false);
-    result:=c;
-    if draw
-    then CadPaint.paintArc(a.x,a.y,b.x,b.y,c.x,c.y);
-  end;
+  result:= CadPaint.toLeft(a,lenght,angle,False,False);
+  CadPaint.paintHistoryAdd(PaintObject(ObjLeft, a, lenght, angle,'',CadPen.Style,CadPen.Width,CadPen.Color));
 end;
+
+//function TFrameCad.toLeft(a: TCursor; lenght, angle: double; draw: boolean; 
+//  chording: boolean): TCursor;
+//var
+//  r:double;
+//  b,c:TCursor;
+//begin
+//  if angle<>0
+//  then r:= lenght*180/Pi/angle
+//  else r:=MaxCurrency;
+//  if chording then
+//  begin
+//    result:=a;
+//    result:=chord(result,r,angle/3,draw);
+//    result:=chord(result,r,angle/3,draw);
+//    result:=chord(result,r,angle/3,draw);
+//  end
+//  else
+//  begin
+//    b:=chord(a,r,angle/2,false);
+//    c:=chord(a,r,angle,false);
+//    result:=c;
+//    if draw
+//    then CadPaint.paintArc(a.x,a.y,b.x,b.y,c.x,c.y);
+//  end;
+//end;
 
 function TFrameCad.toLeftRail(a: TCursor; lenght, angle, RailBetween: double; 
   draw: boolean; chording: boolean): TCursor;
@@ -332,8 +348,15 @@ end;
 function TFrameCad.toRight(a: TCursor; lenght, angle: double; draw: boolean; 
   chording: boolean): TCursor;
 begin
-  result := toLeft(a, lenght, -angle, draw,chording)
+  result:= CadPaint.toRight(a,lenght,angle,False,False);
+  CadPaint.paintHistoryAdd(PaintObject(ObjRigth, a, lenght, angle, '',CadPen.Style,CadPen.Width,CadPen.Color));
 end;
+
+//function TFrameCad.toRight(a: TCursor; lenght, angle: double; draw: boolean; 
+//  chording: boolean): TCursor;
+//begin
+//  result := toLeft(a, lenght, -angle, draw,chording)
+//end;
 
 function TFrameCad.toRightRail(a: TCursor; lenght, angle, RailBetween: double; 
   draw: boolean; chording: boolean): TCursor;
@@ -341,14 +364,14 @@ begin
   result := toLeftRail(a, lenght, -angle, RailBetween, draw, chording);
 end;
 
-function TFrameCad.chord(a: TCursor; r, angle: double; draw: boolean): TCursor;
-var lenghtCord:double;
-begin
-  lenghtCord := 2*r*sin((angle*pi/180)/2);
-  a.angle := a.angle+angle/2;
-  result := toStright(a,lenghtCord,draw);
-  result.angle:=result.angle+angle/2;
-end;
+//function TFrameCad.chord(a: TCursor; r, angle: double; draw: boolean): TCursor;
+//var lenghtCord:double;
+//begin
+//  lenghtCord := 2*r*sin((angle*pi/180)/2);
+//  a.angle := a.angle+angle/2;
+//  result := toStright(a,lenghtCord,draw);
+//  result.angle:=result.angle+angle/2;
+//end;
 
 constructor TFrameCad.Create(TheOwner: TComponent);
 begin
@@ -373,31 +396,31 @@ begin
     then
     begin
       scale:=2;
-      paintConditional(p_passport);
+      paintConditional(p_passport,Cursor_0);
     end
     else
    if passType = 1//участок
     then
     begin
       scale:=2;
-      paintConditional(p_passport)
+      paintConditional(p_passport,Cursor_0)
     end
     else
    if passType = 2//узел
     then begin
-      scale:=20;
-      paintScheme(p_passport)
+      scale:=10;
+      paintScheme(p_passport,Cursor_0)
     end
     else
    if passType = 3//эпюр
     then
     begin
       scale:=100;
-     paintEpure(p_passport);
+     paintEpure(p_passport,Cursor_0);
     end;
 end;
 
-procedure TFrameCad.paintConditional(passport: TPassProp);
+function TFrameCad.paintConditional(passport: TPassProp; a: TCursor): TCursor;
 type
   elemTemp = record 
     x: integer;
@@ -595,7 +618,7 @@ begin
   CadPen.Color := clRed;
 end;
 
-procedure TFrameCad.paintScheme(passport: TPassProp);
+function TFrameCad.paintScheme(passport: TPassProp; a: TCursor): TCursor;
 var
   pen,pos0: TCursor;
   i,j: integer;
@@ -605,20 +628,28 @@ var
 begin
   // Обновляем или заполняем объекты-справочники
   if passport = nil then exit;
-  ActionClear.Execute;
-  pos0.x := 20;
-  pos0.y := 900;
-  pos0.angle := 0;
+  if (a.x = 0) and (a.y = 0) 
+  then ActionClear.Execute;
+  pos0.x := a.x;
+  pos0.y := a.y;
+  pos0.angle := a.angle;
   begin
     for i := 0 to passport.ComponentCount - 1 do
     begin
       try
         branch := TPassBranch(passport.Components[i]);
-        pen.x:=pos0.x + branch.pos_x * scale;
-        pen.y:=pos0.y + branch.pos_y * scale;
-        //pen.x:=pos0.x + branch.pos_x * cos((branch.pos_ang+90)*pi/180) * scale;
-        //pen.y:=pos0.y + branch.pos_y * sin((branch.pos_ang+90)*pi/180) * scale;
-        pen.angle:=pos0.angle + branch.pos_ang;
+        if (branch.epure_key<>'') and (CadPaint.TestPointMem(StrToInt(branch.epure_key))) then
+        begin
+          pen :=CadPaint.getPointMem(StrToInt(branch.epure_key));
+        end
+        else
+        begin
+          pen.x:=pos0.x + branch.pos_x * scale;
+          pen.y:=pos0.y + branch.pos_y * scale;
+          //pen.x:=pos0.x + branch.pos_x * cos((branch.pos_ang+90)*pi/180) * scale;
+          //pen.y:=pos0.y + branch.pos_y * sin((branch.pos_ang+90)*pi/180) * scale;
+          pen.angle:=pos0.angle + branch.pos_ang;
+        end;
         for j := 0 to branch.ComponentCount - 1 do
           try
             //if i>0 then break;//только 1 ветка
@@ -650,6 +681,17 @@ begin
               pen:=toLeftRail(pen,len,angle,railBetween* scale);
             end
             else
+            if (passObj.obj_type = '4') then
+            if (passObj.epure_id<>'') then //встроенная ветка(эпюр)
+            begin
+              CadPen.Color:=clRed;
+              CadPaint.AddPointMem(pen,strtoint(passObj.epure_id));
+              pen:=paintScheme(
+                TPassProp.CreateAsBranch(strtoint(passObj.epure_id), DataM.ZConnection1),
+                pen);
+              CadPen.Color:=clBlack;
+            end
+            else
             if passObj.obj_type = '5' then //примыкание
             begin
               CadPen.Style:=psDash;
@@ -660,13 +702,14 @@ begin
           end;
       except
       end;
-      //CadPaint.paintPoint(obj.x, obj.y, p_rad);
-      pen.y := pen.y + 40 * scale;
     end;
   end;
+  result:= pen;
+  if (a.x = 0) and (a.y = 0) 
+  then   CadPaint.paintHistoryRepeat();
 end;
 
-procedure TFrameCad.paintEpure(passport: TPassProp);
+function TFrameCad.paintEpure(passport: TPassProp; a: TCursor): TCursor;
 var
   pen,pos0: TCursor;
   i,j: integer;
@@ -677,8 +720,8 @@ begin
   // Обновляем или заполняем объекты-справочники
   if passport = nil then exit;
   ActionClear.Execute;
-  pos0.x := 20;
-  pos0.y := 400;
+  pos0.x := 0;
+  pos0.y := 0;
   pos0.angle := 0;
   begin
     for i := 0 to passport.ComponentCount - 1 do
@@ -731,6 +774,7 @@ begin
       pen.y := pen.y + 40 * scale;
     end;
   end;
+  CadPaint.paintHistoryRepeat();
 end;
 
 end.

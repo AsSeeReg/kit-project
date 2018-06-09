@@ -24,6 +24,8 @@ type
     ActionObjDel: TAction;
     ActionObjAdd: TAction;
     ActionListObjElem: TActionList;
+    CheckBoxMirror: TCheckBox;
+    CheckBoxRevers: TCheckBox;
     DBComboBoxElemTypeMinor: TDBLookupComboBox;
     DBComboBoxContiguity: TDBLookupComboBox;
     DBComboBoxTypeObj: TDBLookupComboBox;
@@ -34,6 +36,7 @@ type
     EdPoint1: TEdit;
     EdPoint2: TEdit;
     EdRad: TEdit;
+    EdBranchID: TEdit;
     EdTan: TEdit;
     GroupBoxObjProp: TGroupBox;
     GroupBoxObj: TGroupBox;
@@ -44,6 +47,7 @@ type
     Lab4: TLabel;
     LabPoint2: TLabel;
     LabRad1: TLabel;
+    LabBrId: TLabel;
     LabTan1: TLabel;
     MenuItem1: TMenuItem;
     MenuItem2: TMenuItem;
@@ -55,21 +59,25 @@ type
     MenuItem7: TMenuItem;
     PanelL2: TPanel;
     PanelL3: TPanel;
+    PanelL4: TPanel;
     PanelPoint: TPanel;
     PanelContiguity: TPanel;
     PanelL: TPanel;
     PanelL1: TPanel;
     PanelTurn: TPanel;
+    PanelEpure: TPanel;
     PanelV: TPanel;
     PanelV1: TPanel;
     PanelV2: TPanel;
     PanelV3: TPanel;
+    PanelV4: TPanel;
     PopupMenuObj: TPopupMenu;
     PopupMenuElem: TPopupMenu;
     Splitter1: TSplitter;
     Splitter2: TSplitter;
     Splitter4: TSplitter;
     Splitter5: TSplitter;
+    ZQElements: TZQuery;
     ZQObjects: TZQuery;
     //ZQElements: TZQuery;
     ZQPassObjType: TZQuery;
@@ -79,9 +87,12 @@ type
     procedure ActionElemDelExecute(Sender: TObject);
     procedure ActionObjAddExecute(Sender: TObject);
     procedure ActionObjDelExecute(Sender: TObject);
+    procedure CheckBoxMirrorChange(Sender: TObject);
+    procedure CheckBoxReversChange(Sender: TObject);
     procedure DBComboBoxTypeElChange(Sender: TObject);
     procedure DBComboBoxTypeEl_minorChange(Sender: TObject);
     procedure DBComboBoxTypeObjChange(Sender: TObject);
+    procedure EdBranchIDChange(Sender: TObject);
     procedure EdPoint1Change(Sender: TObject);
     procedure EdPoint2Change(Sender: TObject);
     procedure EdRadChange(Sender: TObject);
@@ -195,6 +206,7 @@ begin
   PanelContiguity.Visible:=(strtoint(active_obj.obj_type)=5);
   PanelPoint.Visible:=not (strtoint(active_obj.obj_type)=5);
   PanelTurn.Visible :=(strtoint(active_obj.obj_type)=2) or (strtoint(active_obj.obj_type)=3);
+  PanelEpure.Visible :=(strtoint(active_obj.obj_type)=4);
 
   GroupBoxObjProp.Visible:=True;
   GroupBoxObjProp.Caption:='Объект №'+KGridObj.Cells[0,KGridObj.Row]+': '+KGridObj.Cells[1,KGridObj.Row];
@@ -203,6 +215,10 @@ begin
   EdTan.Text:= active_obj.obj_tan;
   EdPoint1.Text:= active_obj.point_1;
   EdPoint2.Text:= active_obj.point_2;
+  EdBranchID.text:= active_obj.epure_id;
+  CheckBoxRevers.Checked:=StrToBool(active_obj.epure_reverse);
+  CheckBoxMirror.Checked:=StrToBool(active_obj.epure_mirror);
+  
   GetElements(active_obj_id, integer(DBComboBoxTypeEl.KeyValue)); //object_id
 end;
 
@@ -219,6 +235,20 @@ begin
    KGridObj.DeleteRow(KGridObj.Row);
    //Здесь удаляем объект и все элеметы
    KGridObjClick(nil);//обновляем элементы
+end;
+
+procedure TFramePassportObjects.CheckBoxMirrorChange(Sender: TObject);
+begin
+  if CheckBoxMirror.Checked
+  then active_obj.epure_mirror:='True'
+  else active_obj.epure_mirror:='False'
+end;
+
+procedure TFramePassportObjects.CheckBoxReversChange(Sender: TObject);
+begin
+  if CheckBoxRevers.Checked
+  then active_obj.epure_reverse:='True'
+  else active_obj.epure_reverse:='False'
 end;
 
 procedure TFramePassportObjects.DBComboBoxTypeElChange(Sender: TObject);
@@ -288,6 +318,11 @@ if sender is TDBLookupComboBox then
  end;
 // KGridObjProp.SetFocus;
 KGridObjClick(nil);//обновляем элементы
+end;
+
+procedure TFramePassportObjects.EdBranchIDChange(Sender: TObject);
+begin
+  active_obj.epure_id:=EdBranchID.Text;
 end;
 
 procedure TFramePassportObjects.EdPoint1Change(Sender: TObject);

@@ -73,6 +73,7 @@ type
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure LineColorColorChanged(Sender: TObject);
+    procedure MyCanvasDblClick(Sender: TObject);
     procedure MyCanvasMouseDown(Sender: TObject; Button: TMouseButton; 
       Shift: TShiftState; X, Y: Integer);
     procedure MyCanvasMouseMove(Sender: TObject; Shift: TShiftState; X, 
@@ -88,15 +89,37 @@ type
   public
     { public declarations }
     paintbmp: TBitmap;
+    paintHistory : array of TPaintObject;
+    pointMem : array of TPointMem;
+    limTop : single;
+    limDown : single;
+    limLeft : single;
+    limRight : single;
+    shiftDown : Integer;
+    shiftRight : Integer;
     constructor Create(TheOwner: TComponent); override;
     procedure Clear();
-    procedure resizeCadCanvas(pWidth,pHeight: integer);
+    procedure resizeCadCanvas(pWidth,pHeight: Single);
     procedure paintLine(x1,y1,x2,y2:integer);
     procedure paintText(x1,y1:Double;pText:string);
     procedure paintRect(x1,y1,x2,y2:integer);
     //procedure paintRibbon(x1,x2,h:integer);
     procedure paintPoint(x1,y1,r:integer);
-    procedure paintArc(ax,ay,bx,by,cx,cy:single);
+    procedure paintArc(ax,ay,bx,by,cx,cy:single;leftAr:boolean);
+    
+    function chord(a: TCursor; r, angle: double; draw :boolean=true): TCursor;
+    function toStright(a:TCursor;lenght:double; draw :boolean=true):TCursor;//TMyShape
+    function toLeft (a:TCursor;lenght,angle:double; draw :boolean=true; chording: boolean=false):TCursor;//TMyShape
+    function toRight(a:TCursor;lenght,angle:double; draw :boolean=true; chording: boolean=false):TCursor;//TMyShape
+    
+    procedure limTest(a:TCursor);
+    function cursorShift(a:TCursor):TCursor;
+    procedure paintHistoryClear();
+    procedure paintHistoryAdd(obj:TPaintObject);
+    procedure paintHistoryRepeat();
+    procedure AddPointMem(pCursor:TCursor;id:Integer);
+    function GetPointMem(id:Integer):TCursor;
+    function TestPointMem(id:Integer):Boolean;
   end;
 
 implementation
@@ -242,15 +265,28 @@ begin
 end;
 
 procedure TFrameCadPaint.Button3Click(Sender: TObject);
+var
+  Cur :TCursor;
 begin
-  paintbmp.Canvas.Clear;
-  MyCanvasPaint(Sender);
+  limDown:=500;
+  limRight:=500;
+  paintHistoryClear();
+  Cur.x:=100;
+  Cur.y:=100;
+  Cur.angle:=30;
+  paintHistoryAdd(PaintObject(ObjStright,cur,20));
+  paintHistoryRepeat();
 end;
 
 procedure TFrameCadPaint.LineColorColorChanged(Sender: TObject);
 begin
   paintbmp.Canvas.Pen.Color:=LineColor.ButtonColor;
   MyCanvas.Canvas.Pen.Color:=LineColor.ButtonColor;
+end;
+
+procedure TFrameCadPaint.MyCanvasDblClick(Sender: TObject);
+begin
+  ActionSave.Execute;
 end;
 
 procedure TFrameCadPaint.MyCanvasMouseDown(Sender: TObject; 
@@ -383,31 +419,26 @@ begin
   MyCanvasPaint(nil);
 end;
 
-procedure TFrameCadPaint.resizeCadCanvas(pWidth, pHeight: integer);
+procedure TFrameCadPaint.resizeCadCanvas(pWidth, pHeight: Single);
 var
   tempColor:TColor;
+  iWidth,iHeight:integer;
 begin
-  //tempColor:= paintbmp.Canvas.Brush.Color;
+  iWidth:= round(pWidth);
+  iHeight:= round(pHeight);
   
-    //CadBrush.Color := backgroundColor;
-  //CadBrush.Style := bsSolid;
-
-  
-  if pWidth <1 then pWidth :=paintbmp.Width+1;
-  if pHeight<1 then pHeight:=paintbmp.Height+1;
+  if iWidth <1 then iWidth :=paintbmp.Width+1;
+  if iHeight<1 then iHeight:=paintbmp.Height+1;
   
   
   paintbmp.Canvas.Brush.Color := backgroundColor;
   paintbmp.Canvas.Brush.Style := bsSolid;
   
-  paintbmp.SetSize(pWidth, pHeight);
-  paintbmp.Canvas.FloodFill(pWidth-1, pHeight-1, clBlack, fsSurface);
-  //paintbmp.Canvas.Clear;
-  
+  paintbmp.SetSize(iWidth, iHeight);
+  paintbmp.Canvas.FloodFill(iWidth-1, iHeight-1, clBlack, fsSurface);
+   
   MyCanvasPaint(nil);
   
-  //MyCanvas.Color:= tempColor;
-  //paintbmp.Canvas.Brush.Color:= tempColor;
 end;
 
 procedure TFrameCadPaint.paintLine(x1, y1, x2, y2: integer);
@@ -435,7 +466,8 @@ begin
   paintbmp.Canvas.Ellipse(x1-r, y1-r, x1+r, y1+r); 
 end;
 
-procedure TFrameCadPaint.paintArc(ax, ay, bx, by, cx, cy: single);
+procedure TFrameCadPaint.paintArc(ax, ay, bx, by, cx, cy: single; 
+  leftAr: boolean);
 var
   ta,tb,tc,td,te,tf,tg,R,Ox,Oy:Single;
   //O:TPoint;
@@ -462,10 +494,167 @@ begin
        Ox := Round((tD * tE - tB * tF) / tG);
        Oy := Round((tA * tF - tC * tE) / tG);
        R:=sqrt(sqr(oX-ax)+sqr(oY-ay));
-      if AY<OY
+       //if (AY<OY)
+       if leftAr//заглушка для совместимости, на больших углах ошибка 
        then paintbmp.Canvas.Arc(Round((oX-R)),Round((oY-R)),Round((oX+R)),Round((oY+R)),Round(CX),Round(CY),Round(AX),Round(AY))
        else paintbmp.Canvas.Arc(Round((oX-R)),Round((oY-R)),Round((oX+R)),Round((oY+R)),Round(AX),Round(AY),Round(CX),Round(CY));
     //end;
+end;
+
+function TFrameCadPaint.chord(a: TCursor; r, angle: double; draw: boolean
+  ): TCursor;
+var lenghtCord:double;
+begin
+  lenghtCord := 2*r*sin((angle*pi/180)/2);
+  a.angle := a.angle+angle/2;
+  result := toStright(a,lenghtCord,draw);
+  result.angle:=result.angle+angle/2;
+end;
+
+function TFrameCadPaint.toStright(a: TCursor; lenght: double; draw: boolean
+  ): TCursor;
+begin
+  result.x:= a.x+cos(a.angle*pi/180)*lenght;
+  result.y:= a.y+sin(a.angle*pi/180)*lenght;
+  result.angle:= a.angle;
+  if draw then
+  paintLine(round(a.x),round(a.y),round(result.x),round(result.y));
+  limTest(result);
+end;
+
+function TFrameCadPaint.toLeft(a: TCursor; lenght, angle: double; 
+  draw: boolean; chording: boolean): TCursor;
+var
+  r:double;
+  b,c:TCursor;
+begin
+  if angle<>0
+  then r:= lenght*180/Pi/angle
+  else r:=MaxCurrency;
+  if chording then
+  begin
+    result:=a;
+    result:=chord(result,r,angle/3,draw);
+    result:=chord(result,r,angle/3,draw);
+    result:=chord(result,r,angle/3,draw);
+  end
+  else
+  begin
+    b:=chord(a,r,angle/2,false);
+    c:=chord(a,r,angle,false);
+    result:=c;
+    if draw
+    then paintArc(a.x,a.y,b.x,b.y,c.x,c.y,angle>0);
+  end;
+  limTest(result);
+end;
+
+function TFrameCadPaint.toRight(a: TCursor; lenght, angle: double; 
+  draw: boolean; chording: boolean): TCursor;
+begin
+  result := toLeft(a, lenght, -angle, draw,chording);
+  limTest(result);
+end;
+
+procedure TFrameCadPaint.limTest(a: TCursor);
+begin
+  if a.x > limRight then limRight := a.x;
+  if a.x < limLeft then limLeft := a.x;
+  if a.y > limDown then limDown := a.y;
+  if a.y < limTop then limTop := a.y;
+end;
+
+function TFrameCadPaint.cursorShift(a: TCursor): TCursor;
+begin
+  result.x:=a.x+shiftRight+50;
+  result.y:=a.y+shiftDown+50;
+  result.angle:=a.angle;
+end;
+
+procedure TFrameCadPaint.paintHistoryClear;
+begin
+  limTop:=0;
+  limDown:=100;
+  limLeft:=0;
+  limRight:=100;
+  shiftDown:=0;
+  shiftRight:=0;
+  SetLength(paintHistory,0);
+  SetLength(pointMem,0);
+end;
+
+procedure TFrameCadPaint.paintHistoryAdd(obj: TPaintObject);
+begin
+  SetLength(paintHistory,length(paintHistory)+1);
+  paintHistory[High(paintHistory)] := obj;
+end;
+
+procedure TFrameCadPaint.paintHistoryRepeat;
+var
+  i: integer;
+begin
+  if limTop<>0 then
+  begin
+    limDown := limDown - limTop;
+    shiftDown:= round(- limTop);
+    limTop := 0;
+  end;
+  if limLeft<>0 then
+  begin
+    limRight := limRight - limLeft;
+    shiftRight:= round(- limLeft);
+    limLeft := 0;
+  end;
+  resizeCadCanvas(limRight+100,limDown+100);
+  Clear();
+  for i:=0 to length(paintHistory)-1 do
+  with paintHistory[i] do
+    begin
+      cursor:=cursorShift(cursor);
+      paintbmp.Canvas.Pen.Style:=PenStyle;
+      paintbmp.Canvas.Pen.Width:=penWidth;
+      paintbmp.Canvas.Pen.Color:=penColor;
+      case objType of
+        ObjStright : toStright(cursor,length,True);
+        ObjLeft : toLeft(cursor,length,angle,True,false);
+        ObjRigth : toRight(cursor,length,angle,True,false);
+      end;
+  end;
+end;
+
+procedure TFrameCadPaint.AddPointMem(pCursor: TCursor; id: Integer);
+begin
+  if TestPointMem(id) then exit;
+  SetLength(pointMem,length(pointMem)+1);
+  pointMem[High(pointMem)].cursor := pCursor;
+  pointMem[High(pointMem)].id := id;
+end;
+
+function TFrameCadPaint.GetPointMem(id: Integer): TCursor;
+var
+  i: integer;
+begin
+  for i:=0 to length(pointMem)-1 do
+    if pointMem[i].id = id
+     then
+     begin
+       result := pointMem[i].cursor;
+       exit;
+     end;
+end;
+
+function TFrameCadPaint.TestPointMem(id: Integer): Boolean;
+var
+  i: integer;
+begin
+  result:= false;
+  for i:=0 to length(pointMem)-1 do
+    if pointMem[i].id = id
+     then 
+     begin
+       result := true;
+       exit;
+     end;
 end;
 
 end.

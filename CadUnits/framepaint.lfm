@@ -18,6 +18,7 @@ object FrameCadPaint: TFrameCadPaint
     BevelOuter = bvNone
     ClientHeight = 32
     ClientWidth = 838
+    Enabled = False
     TabOrder = 0
     object ToolLine: TSpeedButton
       Left = 106
@@ -780,6 +781,7 @@ object FrameCadPaint: TFrameCadPaint
     ClientHeight = 601
     ClientWidth = 112
     TabOrder = 1
+    Visible = False
     object btnCopy: TBitBtn
       Left = 0
       Height = 32
@@ -894,6 +896,7 @@ object FrameCadPaint: TFrameCadPaint
       Height = 360
       Top = 0
       Width = 544
+      OnDblClick = MyCanvasDblClick
       OnMouseDown = MyCanvasMouseDown
       OnMouseMove = MyCanvasMouseMove
       OnMouseUp = MyCanvasMouseUp

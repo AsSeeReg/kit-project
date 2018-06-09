@@ -77,6 +77,9 @@ begin
     PassObj.obj_tan  :=ZQObjects.FieldByName('tan').AsString;
     PassObj.point_1  :=ZQObjects.FieldByName('point_1').AsString;
     PassObj.point_2  :=ZQObjects.FieldByName('point_2').AsString;
+    PassObj.epure_id :=ZQObjects.FieldByName('epure_id').AsString;
+    PassObj.epure_reverse :=ZQObjects.FieldByName('epure_reverse').AsString;
+    PassObj.epure_mirror :=ZQObjects.FieldByName('epure_mirror').AsString;
     PassObj.connecting:=true;
    ZQObjects.Next;
   end;

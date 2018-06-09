@@ -5,24 +5,65 @@ interface
 //типы, слассы, константы, методы общего назначения
 uses
   Classes, SysUtils, md5, ZDataset, ZConnection, Forms, Controls, Grids,
-  StdCtrls, DBGrids, DbCtrls, ComCtrls, ActnList, unit_m_data, KGrids;
+  StdCtrls, DBGrids, DbCtrls, ComCtrls, ActnList, Graphics, unit_m_data,
+  FPCanvas, KGrids;
 
 const
  const_pasNew = -1;
  RT_VERSION   = MakeIntResource(16);
+ ObjStright = 0;
+ ObjLeft = 1;
+ ObjRigth = 2;
+ //ObjPoint = 3;
+ //ObjArc = 4;
 
 type
-  TMyField= record
-    name :string;
-    Value:string;
-    table:string;
+  TMyField = record
+    name : string;
+    value : string;
+    table : string;
   end;
 
 type
-  TCursor= record
+  TCursor = record
     x :double;
     y :double;
-    angle:double;
+    angle : double;
+  end;
+
+type
+  TPointMem = record
+    cursor :TCursor;
+    id :Integer;
+  end;
+
+const
+ Cursor_0: TCursor = (x: 0; y: 0; angle: 0); 
+
+type
+  TPaintObjectOld = record
+    objType : integer; //const
+//    0 - Line
+//    1 - Text
+//    2 - Rect
+//    3 - Point
+//    4 - Arc
+    cursor : TCursor;
+    penColor : TColor;
+    penWidth : Integer;
+    x1,y1,x2,y2,cx,cy,r:Single;
+    text:string;
+  end;
+
+type
+  TPaintObject = record
+    objType : integer; //const
+    cursor : TCursor;
+    PenStyle : TFPPenStyle;
+    penColor : TColor;
+    penWidth : Integer;
+    length, angle:Single;
+    text:string;
   end;
 
 type
@@ -46,6 +87,30 @@ type
  procedure log(massage:string);
  Procedure MyExcept(Sender : TObject; E : Exception);
  Procedure FormSetEdit(propEdit:Boolean;frame:TWinControl);
+ function PaintObjectOld(
+   objType : integer;
+   cursor : TCursor;
+   x1 : Single = 0;
+   y1 : Single = 0;
+   x2 : Single = 0;
+   y2 : Single = 0;
+   cx : Single = 0;
+   cy : Single = 0;
+   r  : Single = 0;
+   text:string = '';
+   penColor : TColor = clBlack;
+   penWidth : Integer = 1
+):TPaintObjectOld;
+ function PaintObject(
+   objType : integer;
+   cursor : TCursor;
+   length : Single = 0;
+   angle  : Single = 0;
+   text:string = '';
+   PenStyle : TFPPenStyle = psSolid;
+   penWidth : Integer = 1;
+   penColor : TColor = clBlack
+):TPaintObject;
  var
    authorization :TLicRec;
 
@@ -198,6 +263,38 @@ begin
  end;
 end;
 
+function PaintObject(objType: integer; cursor: TCursor; length: Single; 
+  angle: Single; text: string; PenStyle: TFPPenStyle; penWidth: Integer; 
+  penColor: TColor): TPaintObject;
+begin
+ result.objType := objType;
+ result.cursor := cursor;
+ result.length := length;
+ result.angle := angle;
+ result.text := text;
+ result.PenStyle := PenStyle;
+ result.penColor := penColor;
+ result.penWidth := penWidth;
+end;
+
+function PaintObjectOld(objType: integer; cursor: TCursor; x1: Single; 
+  y1: Single; x2: Single; y2: Single; cx: Single; cy: Single; r: Single; 
+  text: string; penColor: TColor; penWidth: Integer): TPaintObjectOld;
+begin
+  result.objType := objType;
+  result.cursor := cursor;
+  result.x1 := x1;
+  result.y1 := y1;
+  result.x2 := x2;
+  result.y2 := y2;
+  result.cx := cx;
+  result.cy := cy;
+  result.r := r;
+  result.text := text;
+  result.penColor := penColor;
+  result.penWidth := penWidth;
+end;
+
 function GetSQL(iden: string; param1: integer; param2: integer): string;
 var SQL:string;
 begin
@@ -262,13 +359,20 @@ begin
     ;
   end else
     //-----------------------
-  if iden='branchs' then
-  begin
-    sql:=' select * from branch'
-        +' where pass_id='+inttostr(param1)
-        ;
-  end else
-  //-----------------------
+    if iden='branchs' then
+    begin
+      sql:=' select * from branch'
+          +' where pass_id='+inttostr(param1)
+          ;
+    end else
+    //-----------------------
+    if iden='branch' then
+    begin
+      sql:=' select * from branch'
+          +' where id='+inttostr(param1)
+          ;
+    end else
+    //-----------------------
   if iden='obj_new_id' then
   begin
     sql:=' select (max(id)+1) id from objects'
@@ -305,9 +409,10 @@ begin
   if iden='objects' then
   begin
     sql:=' '
-        +' select objects.id id,  obj_type,'
-        +' point_1, point_2, '
-        +' rad,length, pos, tan from objects '
+        //+' select objects.id id,  obj_type,'
+        //+' point_1, point_2, epure_id,'
+        //+' rad,length, pos, tan from objects '
+        +' select * from objects '
         +' where branch_id='+inttostr(param1)
         +' order by pos                       '
         ;

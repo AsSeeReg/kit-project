@@ -24,6 +24,9 @@ type
     f_pas_id     :TMyField;
     f_point_1    :TMyField;
     f_point_2    :TMyField;
+    f_epure_id   :TMyField;
+    f_epure_reverse :TMyField;
+    f_epure_mirror  :TMyField;
     f_conn       :TZConnection;
     //propEdit: Boolean;
     ZQProp       : TZQuery;
@@ -46,6 +49,9 @@ type
     property pas_id     :string  Index 6 read getValue  write setValue;
     property point_1    :string  Index 7 read getValue  write setValue;
     property point_2    :string  Index 8 read getValue  write setValue;
+    property epure_id   :string  Index 9 read getValue  write setValue;
+    property epure_reverse :string  Index 10 read getValue  write setValue;
+    property epure_mirror  :string  Index 11 read getValue  write setValue;
     //property Edit    :Boolean read propEdit  write setEdit; 
 
     constructor Create(TheOwner: TComponent;p_obj_id:integer;p_conn:TZConnection);
@@ -75,6 +81,9 @@ begin
     6: fld:=addr(f_pas_id);
     7: fld:=addr(f_point_1);
     8: fld:=addr(f_point_2);
+    9: fld:=addr(f_epure_id);
+    10: fld:=addr(f_epure_reverse);
+    11: fld:=addr(f_epure_mirror);
     else exit;
     end;
     result:=fld^.Value;
@@ -100,6 +109,9 @@ begin
     6: fld:=addr(f_pas_id);
     7: fld:=addr(f_point_1);
     8: fld:=addr(f_point_2);
+    9: fld:=addr(f_epure_id);
+    10: fld:=addr(f_epure_reverse);
+    11: fld:=addr(f_epure_mirror);
     else exit;
     end;
     if Value=fld^.Value then exit;
@@ -209,6 +221,15 @@ begin
   f_point_2.Value     := '';
   f_point_2.name      := 'point_2';
   f_point_2.table     := 'objects';
+  f_epure_id.Value     := '';
+  f_epure_id.name      := 'epure_id';
+  f_epure_id.table     := 'objects';
+  f_epure_reverse.Value     := 'False';
+  f_epure_reverse.name      := 'epure_reverse';
+  f_epure_reverse.table     := 'objects';
+  f_epure_mirror.Value     := 'False';
+  f_epure_mirror.name      := 'epure_mirror';
+  f_epure_mirror.table     := 'objects';
   loadOllElements;
   connecting:=true;
 end;
@@ -228,6 +249,9 @@ begin
     f_pas_id  .value :=ZQProp.FieldByName(f_pas_id  .name).AsString;
     f_point_1 .value :=ZQProp.FieldByName(f_point_1 .name).AsString;
     f_point_2 .value :=ZQProp.FieldByName(f_point_2 .name).AsString;
+    f_epure_id.value :=ZQProp.FieldByName(f_epure_id.name).AsString;
+    f_epure_reverse.value :=ZQProp.FieldByName(f_epure_reverse.name).AsString;
+    f_epure_mirror.value :=ZQProp.FieldByName(f_epure_mirror.name).AsString;
   except
     result:=false;
   end;

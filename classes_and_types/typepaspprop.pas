@@ -53,6 +53,7 @@ type
     property user_edit   :string  Index 8 read getValue  write setValue;
     //property Edit    :Boolean read propEdit  write setEdit; 
     constructor Create(p_pass_id,p_user_id:integer;p_conn:TZConnection; createOllBranches:Boolean = false);
+    constructor CreateAsBranch(p_branch_id:integer;p_conn:TZConnection);
     function getData():boolean;
     function getElementGroupsCount: Integer;
     function getElementGroup(i:integer=0): integer;//use getElementGroupsCount and elementGroupsList
@@ -212,8 +213,6 @@ begin
   begin
     ZQBranches:=TZQuery.Create(nil);
     ZQBranches.Connection:=f_conn;
-    //ZQObjects :=TZQuery.Create(nil);
-    //ZQObjects .Connection:=f_conn;
     ZQBranches.SQL.Add(GetSQL('branchs',p_pass_id));
     ZQBranches.Open;
     ZQBranches.First;
@@ -224,19 +223,41 @@ begin
       PassBranch.pos_y:= ZQBranches.FieldByName('pos_y').AsFloat;
       PassBranch.pos_ang:= ZQBranches.FieldByName('pos_ang').AsFloat;
       PassBranch.epure_key:= ZQBranches.FieldByName('epure_key').AsString;
-      //PassBranch.addPasObject;
-      ////перенести в ветки и убрать из frame passport obj
-      //  ZQObjects.SQL.Text:=GetSQL('objects',PassBranch.branch_id);
-      //  ZQObjects.Open;
-      //  ZQObjects.First;
-      //   while not(ZQObjects.EOF) do begin
-      //     PassBranch.getPasObject(ZQObjects.FieldByName('id').AsInteger);
-      //     ZQObjects.Next;
-      //   end;
-      //   ZQObjects.Close;
       ZQBranches.Next;
     end;
   end;
+end;
+
+constructor TPassProp.CreateAsBranch(p_branch_id: integer; 
+  p_conn: TZConnection);
+var
+  ZQBranches,ZQObjects : TZQuery;
+  p_pass_id : integer;
+begin
+  inherited Create(nil);
+  elementGroupsCount := -1;
+  ZQProp:= TZQuery.Create(nil);
+  f_conn:= p_conn;
+  ZQProp.Connection:=f_conn;
+    //Получаес список компанентов, создаём их по списку id
+     ZQBranches:=TZQuery.Create(nil);
+    ZQBranches.Connection:=f_conn;
+    ZQBranches.SQL.Add(GetSQL('branch',p_branch_id));
+    ZQBranches.Open;
+    ZQBranches.First;
+    if not ZQBranches.EOF then begin
+      p_pass_id:=ZQBranches.FieldByName('pass_id').AsInteger;
+      PassBranch:=TPassBranch.Create(p_pass_id,ZQBranches.FieldByName('id').AsInteger,f_conn,self);
+      PassBranch.branch_name:= ZQBranches.FieldByName('branch_name').AsString;
+      PassBranch.pos_x:= ZQBranches.FieldByName('pos_x').AsFloat;
+      PassBranch.pos_y:= ZQBranches.FieldByName('pos_y').AsFloat;
+      PassBranch.pos_ang:= ZQBranches.FieldByName('pos_ang').AsFloat;
+      PassBranch.epure_key:= ZQBranches.FieldByName('epure_key').AsString;
+    end;
+  f_pass_id.value:=inttostr(p_pass_id);
+  //f_user_id:=inttostr(p_user_id);
+  LongitudinalProfile:=nil;
+  getData();
 end;
 
 function TPassProp.getData: boolean;
