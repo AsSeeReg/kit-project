@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, unit_m, unit_fr_pasport, unit_m_data, zcomponent, rxnew,
+  Forms, unit_m, unit_fr_pasport, unit_m_data, zcomponent, rxnew, RxSortZeos,
 unit_types_and_const, FramePassportProperties, FramePassportObjects,
 FramePassport, unit_login, typePaspProp, typePaspObj, typePaspBranch,
 typePaspElem, FrameSettingsElements, frameCad, unitDemoFrame1, lhelpcontrolpkg, 

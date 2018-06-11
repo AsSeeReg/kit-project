@@ -1,7 +1,7 @@
 object DataM: TDataM
   OldCreateOrder = False
   Height = 440
-  HorizontalOffset = 1263
+  HorizontalOffset = 1229
   VerticalOffset = 527
   Width = 641
   object IL_64: TImageList
@@ -4670,7 +4670,8 @@ object DataM: TDataM
       ' ) as text(20)) as pass_name,'
       'CAST(pass_type_name as text(20)) type,'
       'CAST(pass_name as text(20))name,'
-      'case WHEN  (obj.length is null) then 0 else obj.length end ||''м.'' length,'
+      'ROUND(CASE WHEN  (obj.length is null) then 0 else obj.length end, 2) length,'
+      'CAST(ROUND(obj.length*100+1000000)as Int) lengthSort,'
       'CAST(ppc.value as text(200)) comment,'
       'CAST('
       ' ppy.value||''г.'''

@@ -1,7 +1,7 @@
 object FormM: TFormM
-  Left = 479
+  Left = 505
   Height = 675
-  Top = 184
+  Top = 230
   Width = 1299
   Caption = 'Служба пути'
   ClientHeight = 675
@@ -11612,19 +11612,19 @@ object FormM: TFormM
     TabOrder = 2
     object PanelFind: TPanel
       Left = 0
-      Height = 160
+      Height = 209
       Top = 0
       Width = 491
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
-      ClientHeight = 160
+      ClientHeight = 209
       ClientWidth = 491
       TabOrder = 0
       object CheckGroupFind1: TCheckGroup
         Left = 0
         Height = 56
-        Top = 0
+        Top = 49
         Width = 491
         Align = alTop
         AutoFill = True
@@ -11644,6 +11644,7 @@ object FormM: TFormM
         )
         OnItemClick = CheckFilterClick
         TabOrder = 0
+        Visible = False
         Data = {
           0100000002
         }
@@ -11669,7 +11670,7 @@ object FormM: TFormM
       object CheckGroupEditFind1: TCheckGroup
         Left = 0
         Height = 52
-        Top = 108
+        Top = 157
         Width = 491
         Align = alTop
         AutoFill = True
@@ -11689,6 +11690,7 @@ object FormM: TFormM
         )
         OnItemClick = CheckFilterClick
         TabOrder = 1
+        Visible = False
         Data = {
           0100000002
         }
@@ -11707,7 +11709,7 @@ object FormM: TFormM
       object CheckGroupEditFind: TCheckGroup
         Left = 0
         Height = 52
-        Top = 56
+        Top = 105
         Width = 491
         Align = alTop
         AutoFill = True
@@ -11727,6 +11729,7 @@ object FormM: TFormM
         )
         OnItemClick = CheckFilterClick
         TabOrder = 2
+        Visible = False
         Data = {
           0100000002
         }
@@ -11742,11 +11745,34 @@ object FormM: TFormM
           TabOrder = 0
         end
       end
+      object GroupBoxFindGlob: TGroupBox
+        Left = 0
+        Height = 49
+        Top = 0
+        Width = 491
+        Align = alTop
+        Caption = 'Фильтр:'
+        ClientHeight = 28
+        ClientWidth = 487
+        TabOrder = 3
+        object EditFindGlob: TEdit
+          Left = 0
+          Height = 24
+          Hint = 'Укажите требуемые значения через пробел'
+          Top = 0
+          Width = 487
+          Align = alTop
+          OnChange = EditFindGlobChange
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 0
+        end
+      end
     end
     object RxDBGrid1: TRxDBGrid
       Left = 0
-      Height = 396
-      Top = 165
+      Height = 352
+      Top = 209
       Width = 491
       AfterQuickSearch = RxDBGrid1AfterQuickSearch
       ColumnDefValues.BlobText = '(данные)'
@@ -11804,9 +11830,9 @@ object FormM: TFormM
           SizePriority = 0
           Title.Alignment = taCenter
           Title.Orientation = toHorizontal
-          Title.Caption = 'Протяж.'
+          Title.Caption = 'Протяжённость'
           Width = 97
-          FieldName = 'length'
+          FieldName = 'lengthSort'
           EditButtons = <>
           Filter.DropDownRows = 0
           Filter.EmptyValue = '(Пусто)'
@@ -11814,6 +11840,8 @@ object FormM: TFormM
           Filter.EmptyFont.Style = [fsItalic]
           Filter.ItemIndex = -1
           Footers = <>
+          SortFields = 'lengthSort'
+          OnDrawColumnCell = RxDBGrid1LengthDrawColumnCell
         end      
         item
           SizePriority = 0
@@ -11905,7 +11933,7 @@ object FormM: TFormM
       FooterOptions.DrawFullLine = False
       SearchOptions.QuickSearchOptions = [loCaseInsensitive, loPartialKey]
       SearchOptions.FromStart = False
-      OptionsRx = [rdgAllowColumnsForm, rdgAllowDialogFind, rdgAllowQuickSearch, rdgAllowQuickFilter, rdgAllowFilterForm, rdgAllowSortForm, rdgAllowToolMenu]
+      OptionsRx = []
       Align = alClient
       AutoFillColumns = True
       Color = clWindow
@@ -11918,6 +11946,7 @@ object FormM: TFormM
       FixedCols = 0
       Options = [dgTitles, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgAlwaysShowSelection, dgCancelOnExit, dgHeaderPushedLook]
       PopupMenu = PopupMenuList
+      ReadOnly = True
       Scrollbars = ssAutoVertical
       TabOrder = 1
       TitleFont.CharSet = RUSSIAN_CHARSET
@@ -11927,15 +11956,6 @@ object FormM: TFormM
       TitleFont.Quality = fqDraft
       TitleStyle = tsNative
       OnDblClick = RxDBGrid1DblClick
-    end
-    object Splitter3: TSplitter
-      Cursor = crVSplit
-      Left = 0
-      Height = 5
-      Top = 160
-      Width = 491
-      Align = alTop
-      ResizeAnchor = akTop
     end
     object BBNewPassport: TSpeedButton
       Left = 0
@@ -12008,13 +12028,13 @@ object FormM: TFormM
         Left = 93
         Top = 2
         Action = ActionShowPasp
-        Caption = 'Паспорта'
+        Caption = 'Паспорт'
       end
       object ToolButton3: TToolButton
         Left = 183
         Top = 2
         Action = ActionShowCad
-        Caption = 'Построения'
+        Caption = 'Построение'
       end
       object ToolButton4: TToolButton
         Left = 273

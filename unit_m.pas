@@ -8,9 +8,9 @@ interface
 uses
   Classes, SysUtils, FileUtil, LazHelpCHM, Forms, Controls, Graphics, Dialogs,
   ComCtrls, ExtCtrls, Menus, ActnList, Buttons, StdCtrls, DbCtrls, ExtDlgs,
-  EditBtn, attabs, rxdbgrid, unit_m_data, db, unit_types_and_const,
+  EditBtn, DBGrids, attabs, rxdbgrid, unit_m_data, db, unit_types_and_const,
   FramePassport, FrameSettingsElements, unit_set_repport, unit_frame_set_users,
-  frameCad, ZDataset, KGrids;
+  frameCad, ZDataset, KGrids, Grids;
 
 type
 
@@ -39,8 +39,11 @@ type
     CheckGroupEditFind1: TCheckGroup;
     CheckGroupFind1: TCheckGroup;
     DBLookupFilterType: TDBLookupComboBox;
+    Edit1: TEdit;
     EditFind: TEdit;
     EditFind1: TEdit;
+    EditFindGlob: TEdit;
+    GroupBoxFindGlob: TGroupBox;
     Image3: TImage;
     MenuItemAddPas: TMenuItem;
     MenuItem10: TMenuItem;
@@ -73,7 +76,6 @@ type
     BBNewPassport: TSpeedButton;
     SplitterPass: TSplitter;
     SplitterFind: TSplitter;
-    Splitter3: TSplitter;
     TabSheet1: TTabSheet;
     ToolBar1: TToolBar;
     ToolBar2: TToolBar;
@@ -95,6 +97,7 @@ type
     procedure CheckFilterClick(Sender: TObject; Index: integer);
     procedure DBLookupFilterTypeChange(Sender: TObject);
     procedure EditFindChange(Sender: TObject);
+    procedure EditFindGlobChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure Image3DblClick(Sender: TObject);
@@ -110,6 +113,9 @@ type
     procedure PopupMenuSettingsPopup(Sender: TObject);
     procedure RxDBGrid1AfterQuickSearch(Sender: TObject; Field: TField;
       var AValue: string);
+    procedure RxDBGrid1LengthDrawColumnCell(Sender: TObject; 
+      const Rect: TRect; DataCol: Integer; Column: TColumn; 
+      State: TGridDrawState);
     procedure RxDBGrid1DblClick(Sender: TObject);
     procedure ToolButton10Click(Sender: TObject);
   private
@@ -224,6 +230,31 @@ end;
 procedure TFormM.RxDBGrid1AfterQuickSearch(Sender: TObject; Field: TField;
   var AValue: string);
 begin
+end;
+
+procedure TFormM.RxDBGrid1LengthDrawColumnCell(Sender: TObject; 
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+var
+  st: string;
+  val:Single;
+  rAlign: TTextStyle;
+begin
+ //
+  st:= Column.Field.Text;
+  val:=StrToIntDef(Column.Field.Text,0);
+  if val>=1000000 then val:=(val -1000000)/100;
+  st:= Format('%8.2f',[val])+' м.';
+  with RxDBGrid1.Canvas do
+  begin
+    if val <=0 
+     then begin
+      Brush.Color:=clRed;
+      FillRect(Rect);
+     end;
+    rAlign:=TextStyle;
+    //rAlign.Alignment:=taRightJustify;
+    TextRect(Rect,2,2,st,rAlign);
+  end;
 end;
 
 procedure TFormM.RxDBGrid1DblClick(Sender: TObject);
@@ -376,7 +407,11 @@ begin
 end;
 
 procedure TFormM.CheckFilterClick(Sender: TObject; Index: integer);
-var filt:string;
+var
+  filt:string;
+  fstr:string;
+  tstr:TStringList;
+  i:integer;
 begin
  filt:='';
  if CheckGroupFind1.Checked[0]
@@ -391,9 +426,31 @@ begin
    if  filt<>'' then  filt:=filt+' AND ';
     filt:=filt+'comment like''*'+EditFind.Text+'*''';
   end;
+ 
+  tstr := TStringList.Create();
+  tstr.Delimiter:=' ';
+  tstr.DelimitedText:=UpperCase(trim(EditFindGlob.Text));
+  for i:= 0 to tstr.Count-1 do
+  begin
+    fstr:=trim(tstr.Strings[i]);
+    if fstr='' then Continue;
+    if  filt<>'' then  filt:=filt+' AND ';
+    filt:=filt+'(';
+    filt:=filt+'upper(pass_type_name) like''*'+fstr+'*''';
+    filt:=filt+'or upper(pass_name) like''*'+fstr+'*''';
+    filt:=filt+'or upper(comment) like''*'+fstr+'*''';
+    filt:=filt+'or upper(year) like''*'+fstr+'*''';
+    filt:=filt+'or length like''*'+StringReplace(fstr,',','.',[rfReplaceAll, rfIgnoreCase])+'*''';
+    filt:=filt+')';
+  end;
+  tstr.Free;
+  
   DataM.ZQPasspList.Filter:=filt;
   DataM.ZQPasspList.Filtered:=(filt<>'')
-  and ((CheckGroupFind1.Checked[0]) or (CheckGroupEditFind.Checked[0]) or (CheckGroupEditFind1.Checked[0]));
+  and ((CheckGroupFind1.Checked[0])
+  or (CheckGroupEditFind.Checked[0])
+  or (CheckGroupEditFind1.Checked[0])
+  or (fstr<>''));
 end;
 
 procedure TFormM.DBLookupFilterTypeChange(Sender: TObject);
@@ -402,6 +459,11 @@ begin
 end;
 
 procedure TFormM.EditFindChange(Sender: TObject);
+begin
+  CheckFilterClick(nil,0);
+end;
+
+procedure TFormM.EditFindGlobChange(Sender: TObject);
 begin
   CheckFilterClick(nil,0);
 end;
