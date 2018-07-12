@@ -1,7 +1,7 @@
 object FormM: TFormM
-  Left = 505
+  Left = 508
   Height = 675
-  Top = 230
+  Top = 259
   Width = 1299
   Caption = 'Служба пути'
   ClientHeight = 675
@@ -28071,8 +28071,8 @@ object FormM: TFormM
     end
   end
   object OpenPictureDialog1: TOpenPictureDialog
-    left = 840
-    top = 216
+    left = 936
+    top = 136
   end
   object PopupMenuSettings: TPopupMenu
     TrackButton = tbLeftButton

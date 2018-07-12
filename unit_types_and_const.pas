@@ -253,7 +253,7 @@ begin
    if (Components[i] is TDBGrid) then
    (Components[i] as TDBGrid).ReadOnly := not propEdit;
    if (Components[i] is TDBLookupComboBox) then
-   (Components[i] as TDBLookupComboBox).ReadOnly := not propEdit;
+   (Components[i] as TDBLookupComboBox).Enabled := propEdit;
    if (Components[i] is TStringGrid) then
    (Components[i] as TStringGrid).EditorMode := propEdit;
    if (Components[i] is TKGrid) then

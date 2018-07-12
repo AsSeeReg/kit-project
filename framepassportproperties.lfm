@@ -227,6 +227,7 @@ object FramePassportProperties: TFramePassportProperties
         Top = 23
         Width = 459
         Align = alTop
+        AutoComplete = True
         ListFieldIndex = 0
         ListSource = DataM.DSPasspTypeList
         LookupCache = False
